@@ -27,7 +27,7 @@ layer_height = 0.3;
 wot = 1.5;
 filament_width = layer_height*wot;
 
-thin_wall = 4*layer_height*wo
+thin_wall = 4*layer_height*wot;
 
 // LM8UU
 linear = true;
