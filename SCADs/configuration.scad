@@ -42,12 +42,15 @@ linear = false;
 
 // m8_diameter = 0;
 // m8_nut_diameter = 0;
+// m8_nut_thickness = 0;
 
 // m4_diameter = 0;
-// m4_nut_diameter = 0;
+ m4_nut_diameter = 8.5;
+// m4_nut_thickness = 0;
 
 // m3_diameter = 0;
 // m3_nut_diameter = 0;
+m3_nut_thickness = 3;
 
 // Bushing holder
 
