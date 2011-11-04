@@ -1,6 +1,6 @@
 // PRUSA Mendel  
-// X-carriage
-// Used for sliding on X axis
+// Coupling
+// Used for joining Z leadscrew to motor shaft
 // GNU GPL v2
 // Josef Průša
 // josefprusa@me.com
@@ -31,13 +31,9 @@ include <configuration.scad>
 holeX = 7.5;
 holeY = 6.5;
 
-holeR = 3.4;
-nutR = 3.25;
-nutH = 3;
 corner_cut = 26;
 
-studding_dia = 8.0;
-shaft_dia = 7.0;
+shaft_dia = 8.0;
 
 module coupling(c){
     union(){
@@ -49,15 +45,15 @@ module coupling(c){
             	*cube(size = [2,40,30], center = true);
                 
                 //nut holes
-            	translate([ holeX,  holeY, nutH/2 - 4.01-3/2]) nut(m3_nut_diameter,3);
-            	translate([ holeX, -holeY, nutH/2 - 4.01-3/2]) nut(m3_nut_diameter,3);
-            	translate([-holeX,  holeY, nutH/2 - 4.01-3/2]) nut(m3_nut_diameter,3);
-            	translate([-holeX, -holeY, nutH/2 - 4.01-3/2]) nut(m3_nut_diameter,3);
+            	translate([ holeX,  holeY, m3_nut_thickness/2 - 4.01-3/2]) nut(m3_nut_diameter,m3_nut_thickness);
+            	translate([ holeX, -holeY, m3_nut_thickness/2 - 4.01-3/2]) nut(m3_nut_diameter,m3_nut_thickness);
+            	translate([-holeX,  holeY, m3_nut_thickness/2 - 4.01-3/2]) nut(m3_nut_diameter,m3_nut_thickness);
+            	translate([-holeX, -holeY, m3_nut_thickness/2 - 4.01-3/2]) nut(m3_nut_diameter,m3_nut_thickness);
             }
 
             //shaft groves
-            translate([ -16, 0, 4.5]) rotate([0,90,0]) cylinder(h = 16, r=studding_dia / 2, $fn=16);
-            translate([-0.5, 0, 4.5]) rotate([0,90,0]) cylinder(h = 16, r=shaft_dia / 2,    $fn=16);
+            translate([ -16, 0, 4.5]) rotate([0,90,0]) cylinder(h = 16, r=threaded_rod_diameter / 2, $fn=16);
+            translate([-0.5, 0, 4.5]) rotate([0,90,0]) cylinder(h = 16, r=threaded_rod_diameter / 2,    $fn=16);
 
             //screw holes
             translate([ holeX,  holeY, -10]) polyhole(m3_diameter,20);
@@ -73,10 +69,10 @@ module coupling(c){
         }
         if(c==1){
             // bridge
-        	translate([ holeX,  holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
-        	translate([ holeX, -holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
-        	translate([-holeX,  holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
-        	translate([-holeX, -holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
+        	translate([ holeX,  holeY, m3_nut_thickness-3.9]) cylinder(h = 0.4, r=m3_nut_diameter/2+0.1, $fn=6, center=true);
+        	translate([ holeX, -holeY, m3_nut_thickness-3.9]) cylinder(h = 0.4, r=m3_nut_diameter/2+0.1, $fn=6, center=true);
+        	translate([-holeX,  holeY, m3_nut_thickness-3.9]) cylinder(h = 0.4, r=m3_nut_diameter/2+0.1, $fn=6, center=true);
+        	translate([-holeX, -holeY, m3_nut_thickness-3.9]) cylinder(h = 0.4, r=m3_nut_diameter/2+0.1, $fn=6, center=true);
         }
     }
 }
