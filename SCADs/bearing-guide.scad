@@ -9,12 +9,14 @@
  * @category Printed
  */
 
-single_layer_width=0.6;
-bearing_inner=22.3;
-thickness=1.7;
-height=7+thickness;
-wall_ascent=3;
-wall_descent=0.5;
+single_layer_width = filament_width;
+bearing_inner = bearing_diameter;
+thickness = layer_height * 4.1;
+height = bearing_thickness+thickness;
+wall_ascent = 3;
+wall_descent = 0.5;
+tolerance = 0.15;
+lip = 0.3;
 
 module inner()
 {
@@ -37,9 +39,9 @@ module outer()
 {
 	difference()
 	{
-		cylinder(r=bearing_inner/2+2*single_layer_width+0.3,h=height);
+		cylinder(r=bearing_inner/2+2*single_layer_width+lip+tolerance,h=height);
 		translate([0,0,-1])
-		cylinder(r=bearing_inner/2+single_layer_width+0.3,h=height+2);
+		cylinder(r=bearing_inner/2+single_layer_width+lip+tolerance,h=height+2);
 	}
 
 	difference()
@@ -52,5 +54,5 @@ module outer()
 
 inner();
 
-translate([29,0,0])
+translate([bearing_diameter + 2 * wall_ascent + 2,0,0])
 outer();

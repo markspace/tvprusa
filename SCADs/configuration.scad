@@ -22,11 +22,19 @@ include <metric.scad>;
 
 // CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM
 
-thin_wall = 3;
+// Thin walls
+layer_height = 0.3;
+wot = 1.5;
+filament_width = layer_height*wot;
+
+thin_wall = 4*layer_height*wo
 
 // LM8UU
 linear = true;
 
+//608 bearing
+bearing_diameter = 22.6;
+bearing_thickness = 7;
 
 // CHANGE ONLY THE STUFF YOU KNOW
 // IT WILL REPLACE DEFAULT SETTING
