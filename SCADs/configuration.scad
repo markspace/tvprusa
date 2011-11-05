@@ -36,6 +36,9 @@ linear = true;
 bearing_diameter = 22.6;
 bearing_thickness = 7;
 
+//Timing belt
+belt_pitch = 5;
+
 // CHANGE ONLY THE STUFF YOU KNOW
 // IT WILL REPLACE DEFAULT SETTING
 

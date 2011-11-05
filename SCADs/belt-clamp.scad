@@ -15,22 +15,63 @@ include <configuration.scad>
  * @category Printed
  */ 
 
+hole_spacing = 18;
+hole_padding = 3;
+
+belt_notch_width = 7;
+belt_notch_length = belt_pitch/2+0.1;
+belt_notch_depth = 1.5;
+
+clamp_height = 7;
+tensioner_height=m3_nut_diameter+2+2*belt_notch_depth;
+width = 2*hole_padding + hole_spacing + m3_diameter ;
+depth = m3_diameter + 2* hole_padding;
+
+notches = ceil(depth/belt_pitch)/2;
+
 module beltclamp(){
-difference(){
-	union(0){
-translate(v = [0,0,3.5]) cube([18,10,7], center=true);
-		translate(v = [-9, 0, 0]) cylinder(r=5,h=7);
-		translate(v = [9, 0, 0]) cylinder(r=5,h=7);
+	difference(){
+
+		
+		body (clamp_height);
+
+		//Belt notches
+		translate(v = [0,0,clamp_height ]){
+			for ( i = [-notches:notches]) {
+				translate(v = [0,i*belt_pitch,0])cube(size = [belt_notch_width, belt_notch_length, 2*belt_notch_depth], center = true);
+			}
+		}
+	}
 }
-translate(v = [-9, 0, -1])polyhole(m3_diameter, 12);
-translate(v = [9, 0, -1]) polyhole(m3_diameter, 12);
-translate(v = [0,0,6.5]){
-translate(v = [0,0,5])cube(size = [7, 1.8, 10], center = true);
-translate(v = [0,2.5,5])cube(size = [7, 1.8, 10], center = true);
-translate(v = [0,5,5])cube(size = [7, 1.8, 10], center = true);
-translate(v = [0,-2.5,5])cube(size = [7, 1.8, 10], center = true);
-translate(v = [0,-5,5])cube(size = [7, 1.8, 10], center = true);
+
+module body (hght) {
+	difference(){	
+		//Clamp body
+		union(){
+			translate(v = [0,0,hght/2]) cube([hole_spacing, depth, hght], center=true);
+			translate(v = [-hole_spacing/2, 0, 0]) cylinder(r=depth/2,h=hght);
+			translate(v = [hole_spacing/2, 0, 0]) cylinder(r=depth/2,h=hght);
+		}
+
+		//Holes
+		translate(v = [-hole_spacing/2, 0, -1])polyhole(m3_diameter, hght+2);
+		translate(v = [hole_spacing/2, 0, -1]) polyhole(m3_diameter, hght+2);
+	}
 }
+
+module belt_tensioner(hght){
+	difference() {
+		body (hght);
+
+		translate([0,depth/2+1,m3_nut_diameter/2+1]) rotate([90,0,0]) nut(m3_nut_diameter,m3_nut_thickness+1);
+		translate([0,depth/2+1,m3_nut_diameter/2+1]) rotate([90,0,0]) polyhole(m3_diameter, depth+2);
+	
+		translate([0,0,hght/2+m3_nut_diameter/2+2]) cube([belt_notch_width,depth+2,hght-m3_nut_diameter-2+2],center=true);
+	}
 }
-}
+	
+
 beltclamp();
+
+translate([0,depth+2,0]) 
+belt_tensioner(tensioner_height);
