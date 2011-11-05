@@ -18,29 +18,29 @@ include <configuration.scad>
 
 rodsize = bushing_rodsize;
 outerDiameter = bushing_outerDiameter;
-lenght = bushing_lenght;
+length = bushing_length;
 type = bushing_type;
 
 
-module bushing(stiff, lenght=11){
+module bushing(stiff, length=11){
 	difference(){
 		union(){
-			translate(v=[-7.5,-8,0])cube(size = [15,8,lenght]);
-			cylinder(h = lenght, r=7.5);
+			translate(v=[-7.5,-8,0])cube(size = [15,8,length]);
+			cylinder(h = length, r=7.5);
 		}
 	//cutout inside
 	//Opening
-	rotate(a=[0,0,45]) translate(v=[1,1,-1]) cube(size = [16,16,lenght+2]);
+	rotate(a=[0,0,45]) translate(v=[1,1,-1]) cube(size = [16,16,length+2]);
 	//Cutouts to make it more bendy
 	if(stiff){
-		translate(v=[-4.8,-6,-1]) cube(size = [0.8,6,lenght+2]);
-		translate(v=[4,-6,-1]) cube(size = [0.8,6,lenght+2]);
+		translate(v=[-4.8,-6,-1]) cube(size = [0.8,6,length+2]);
+		translate(v=[4,-6,-1]) cube(size = [0.8,6,length+2]);
 	}else{
-		translate(v=[-4.8,-8,-1]) cube(size = [0.8,8,lenght+2]);
-		translate(v=[4,-8,-1]) cube(size = [0.8,8,lenght+2]);
+		translate(v=[-4.8,-8,-1]) cube(size = [0.8,8,length+2]);
+		translate(v=[4,-8,-1]) cube(size = [0.8,8,length+2]);
 	}
-	translate(v=[0,5,(lenght+2)/2]) cube(size = [7,8,lenght+2], center=true);
-	translate(v=[0,0,-1]) cylinder(h = lenght+2, r=5);
+	translate(v=[0,5,(length+2)/2]) cube(size = [7,8,length+2], center=true);
+	translate(v=[0,0,-1]) cylinder(h = length+2, r=5);
 	}
 }
 
@@ -61,10 +61,10 @@ mirror([ 0, 1, 0 ]) translate(v=[-3,-1,-16])rotate(a=[45,0,0])cube(size = [6,5,1
 
 
 // Includes small cutouts for better prints
-module vertical_bushing(stiff, lenght){
+module vertical_bushing(stiff, length){
 difference(){
-bushing(stiff, lenght);
-translate(v=[-5,0,-1]) cube(size = [10,2.5,lenght+2]);
+bushing(stiff, length);
+translate(v=[-5,0,-1]) cube(size = [10,2.5,length+2]);
 }
 }
 
