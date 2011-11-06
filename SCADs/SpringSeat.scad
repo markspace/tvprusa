@@ -6,10 +6,12 @@
     Script to create a Spring Seat used to centre and retain springs on a rod or bolt.
 */
 
+include <configuration.scad>
+
 /* Global Variables */
 // Parameters to change the parts vital dimensions
 seath = 4;                // overall height of spring seat (mm)
-holeid = 4;               // Inside Diameter of centre hole (mm)
+holeid = m3_diameter;               // Inside Diameter of centre hole (mm)
 springid = 8;            // Inside Diameter of spring (mm)
 springod = 10;	     // Outside Diameter of spring
 smoothness = 32;  // Number of facets making up the circles in the piece
