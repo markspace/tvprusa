@@ -10,7 +10,7 @@
  */
 
 single_layer_width = filament_width;
-bearing_inner = bearing_diameter;
+bearing_inner = bearing_diameter+0.6;
 thickness = layer_height * 4.1;
 height = bearing_thickness+thickness;
 wall_ascent = 3;

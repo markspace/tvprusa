@@ -35,7 +35,7 @@ linear_bearing_diameter=15;
 linear_bearing_length=24;
 
 //608 bearing
-bearing_diameter = 22.6;
+bearing_diameter = 22;
 bearing_thickness = 7;
 
 //Timing belt
