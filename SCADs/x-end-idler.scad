@@ -21,22 +21,58 @@ corection = 1.17;
  * @using 2 m8x30
  */ 
 use <x-end.scad>
-module xendidler(linear){
-	xend(true,linear);
-	translate(v = [0, 0, 12.5]){
-		mirror(){
-			difference(){
-				union(){
-					translate(v = [21, -21.5, 25.3]) cube(size = [25.5,7,4.4], center = true);
-					translate(v = [21, 12.5, 25.3]) #cube(size = [24,5,4.4], center = true);
-					translate(v = [32.5, -5, 7.5]) cube(size = [5,40,40], center = true);
-				}
-				translate(v = [32.5, -6, 28-3-4.7]) rotate(a=[0,90,0]) cylinder(h = 90, r=m8_diameter/2, $fn=9, center=true);
+use <teardrop.scad>
+
+wall_thickness=5;
+
+module xendidler(closed_end=true,curved_sides=true,luu_version=false)
+{
+	difference()
+	{
+		union()
+		{
+			xend(closed_end=closed_end,curved_sides=curved_sides,luu_version=luu_version);
+//			import_stl("x-end.stl");
+
+			translate([-25-15.8/2+24.8/2,-21.5,25.3+12.5]) 
+			cube([24.8,7,4.4],center=true);
+
+			translate([-25-15.8/2+24/2,12.5,25.3+12.5]) 
+			cube([24,5,4.4],center=true);
+
+			difference ()
+			{
+				translate([-25-15.8/2+wall_thickness/2,-5,15.8/2+(40-15.8/2)/2]) 
+				cube([wall_thickness,40,40-15.8+15.8/2],center=true);
+
+				translate([-25,-26,15.8/2])
+				rotate(90) 
+				teardropcentering(6,42);
 			}
 		}
-	}
-	translate([-5,-30,0])scale([2,1,2]) rotate(a=[90,0,0]) linear_extrude(file = "this-way-up.dxf", layer = "r",
-  height = 2, center = true, convexity = 10, twist = -fanrot);
-}
-xendidler(linear);
 
+		translate([-25-15.8/2+wall_thickness/2, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
+		cylinder(h=wall_thickness+2,r=m8_diameter/2,$fn=9,center=true);
+
+		xendcorners(5,5,5,5,0);
+
+//		if (!closed_end)
+//		for (i=[-1,1])
+//		translate([15*i,10,15.8/2+0.75]) 
+//		{
+//			rotate([90,0,0])
+//			rotate([0,0,180/6])
+//			cylinder(r=m3_diameter/2-0.2,h=20,center=true,$fn=6);
+//
+//			rotate([90,0,0])
+//			rotate([0,0,180/6])
+//			cylinder(r=(m3_nut_diameter-0.5)/2,h=3,center=true,$fn=6);
+//
+//			color([1,0,0])
+//			translate([0,0,(10+1)/2])
+//			cube([(m3_nut_diameter-0.5)*cos(30),3,10+1],center=true);
+//		}
+	}
+}
+
+xendidler(closed_end=false,curved_sides=true,luu_version=true);

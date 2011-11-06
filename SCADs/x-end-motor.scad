@@ -8,6 +8,7 @@
 // http://github.com/prusajr/PrusaMendel
 
 include <configuration.scad>
+use <teardrop.scad>
 corection = 1.17; 
 
 /**
@@ -21,59 +22,29 @@ corection = 1.17;
  * @using 2 m8nut
  */
 
-
-
-
 use <x-end.scad>
-module xendmotor(){
-mirror() xend(true,true,false);
 
+xendmotor(endstop_mount=true,curved_sides=true,closed_end=true,luu_version=true);
 
-//nema17 connector
-translate(v = [0, 35, 12.5]) difference(){
-	union(){
-		translate(v = [21, -22.5, 24.5]) cube(size = [24,5,6], center = true);
-		translate(v = [32.5, 2, 13.5]) cube(size = [5,54,52], center = true);
-		translate(v = [22.5, 2, -11]) cube(size = [20,54,3], center = true);
-	}
-
-		// some reduction of bottom part 
-		translate(v = [15, 15, -11]) rotate ([0,0,-17]) cube(size = [20,70,25], center = true);
-
-		translate(v = [0, 0, -4.7]){
-			translate(v = [32.5, 7, 23.5]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) cylinder(h = 10, r=12, $fn=20, center=true);
-
-			translate(v = [30, 7, 23]) rotate(a=[0,90,0]){
-			rotate ([0,0,45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-			rotate ([0,0,-45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-			rotate ([0,0,135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-			rotate ([0,0,-135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-
-			rotate ([0,0,135]) translate([32,0,0]) cube(size = [9,20,25], center = true);
-			rotate ([0,0,-135]) translate([35,0,0]) cube(size = [9,40,25], center = true);
-}
-		}
-}
-	
-
-}
-
-
-difference (){
+module xendmotor(endstop_mount=false,curved_sides=false,closed_end=true,luu_version=false)
+{
+	difference ()
+	{
 		union ()
 		{
-			mirror() xend(true,linear);
+			xend(endstop_mount=endstop_mount,
+				closed_end=closed_end,
+				curved_sides=curved_sides,
+				override_height=luu_version?56.5:-1,
+				luu_version=luu_version);
+//			import_stl("x-end.stl");
 		
-			//translate(v = [0, 35, 12.5]) 
-			//xend_nema17();
-		
-			translate(v = [0, 0, 0]) positioned_motor_mount();
+			positioned_motor_mount();
 		}
 		positioned_motor_mount_holes();
+		xendcorners(5,0,5,5,0);
+	}
 }
-translate([-5,-30,2])scale([2,1,2]) rotate(a=[90,0,0]) linear_extrude(file = "this-way-up.dxf", layer = "l",
-  height = 2, center = true, convexity = 10, twist = -fanrot);
-
 
 // GregFrosts stuff
 nema17_hole_spacing=1.2*25.4; 
@@ -113,8 +84,6 @@ module positioned_motor_mount()
 					cube([thickness,nema17_support_d,nema17_support_d/2]);
 					cube([thickness,nema17_support_d,nema17_support_d/2]);
 				}
-				
-			
 			}
 			
 			render()
@@ -138,10 +107,12 @@ module positioned_motor_mount()
 			}
 		}
 
-	translate(motor_mount_translation)
-	translate([-25,-nema17_width/2-1-16,-32])
-	cube([20,nema17_width+2,20]);
+		translate([25,-26,15.8/2])
+		rotate(90) 
+		teardropcentering(6,42);
 
+		translate([20,-23,-1])
+		cube([8.5,36,20]);
 	}
 }
 
@@ -184,7 +155,11 @@ module motor_mount_holes ()
 		translate([0,0,-24])
 		cylinder(h=25,r=7/2);
 	}
-translate([2.5,-25,0]) #cube([10,20,10]);
+	
+	translate([-7/2-0.5-(nema17_width/2-nema17_hole_spacing/2),0,0])
+	rotate(270)
+	translate([0,0,-1])
+	cube([nema17_width/2,nema17_width/2,thickness+2]);
 }
 
 module barbell (r1,r2,r3,r4,separation) 
