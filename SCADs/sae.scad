@@ -12,7 +12,7 @@
 // RODS
 
 threaded_rod_diameter = 9;
-threaded_rod_diameter_horizontal =9;
+threaded_rod_diameter_horizontal = 9;
 smooth_bar_diameter = 9;
 smooth_bar_diameter_horizontal = 9;
 

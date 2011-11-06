@@ -25,14 +25,14 @@ include <metric.scad>;
 // Thin walls
 layer_height = 0.3;
 wot = 1.5;
-filament_width = layer_height*wot;
+filament_width = layer_height * wot;
 
-thin_wall = 4*layer_height*wot;
+thin_wall = 4 * layer_height * wot;
 
 // LM8UU
 linear = true;
-linear_bearing_diameter=15;
-linear_bearing_length=24;
+linear_bearing_diameter = 15;
+linear_bearing_length = 24;
 
 //608 bearing
 bearing_diameter = 22;
@@ -70,10 +70,8 @@ m3_nut_thickness = 3;
 // bushing_core_diameter = smooth_bar_díameter;
 // bushing_material_thickness = 0;
 
-
 ///counted stuff
-m3_nut_diameter_bigger = ((m3_nut_diameter  / 2) / cos (180 / 6))*2;
+m3_nut_diameter_bigger = ( ( m3_nut_diameter  / 2) / cos( 180 / 6 ) ) * 2;
 
 // functions 
 include <functions.scad>
-
