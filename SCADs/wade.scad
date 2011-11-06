@@ -13,6 +13,7 @@ peek_reprapsource_mount=4;
 arcol_hotend_mount=8;//not yet supported.
 mendel_parts_v6_mount=16; 
 grrf_peek_mount_holes=32;
+j_head=64;
 
 //Set the hotend_mount to the sum of the hotends that you want the extruder to support:
 //e.g. wade(hotend_mount=groovemount+peek_reprapsource_mount);
@@ -91,7 +92,7 @@ grrf_peek_mount_holes=32;
  * @id extruder-spring
  */
 
-wade(hotend_mount=groovemount);
+wade(hotend_mount=j_head);
 //%import_stl("extruder-body.stl");
 
 //Place for printing
@@ -127,8 +128,9 @@ motor_mount_translation=[50.5,34,0];
 motor_mount_thickness=9;
 
 m8_clearance_hole=8.8;
-hole_for_608=22.6;
-608_diameter=22;
+608_diameter=bearing_diameter;
+hole_for_608=608_diameter+0.6;
+
 
 block_top_right=[wade_block_width,wade_block_height];
 
@@ -277,6 +279,8 @@ module wade (hotend_mount=0)
 				mendel_parts_v6_hotend ();
 			if (in_mask(hotend_mount,grrf_peek_mount_holes))
 				grrf_peek_mount_holes();
+			if (in_mask(hotend_mount,j_head))
+				j_head_holes();
 		}
 	}
 }
@@ -692,4 +696,35 @@ module grrf_peek_mount_holes()
 	rotate(90,[1,0,0])
 	translate([hole*(extruder_recess_d/2-1.5),3+1.5,-wade_block_depth/2-1])
 	cylinder(r=1.5,h=wade_block_depth+2,$fn=10);
+}
+
+module j_head_holes () 
+{
+	extruder_recess_d=17;
+	extruder_recess_h=16; 
+	hole_axis_rotation=42.5; 
+	hole_separation=30;
+	hole_slot_height=5;
+	
+	// Recess in base
+	translate([0,0,-1])
+	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
+	
+	for(mount=[-1,1])
+	rotate([0,0,hole_axis_rotation+90+90*mount])
+	translate([hole_separation/2,0,0])
+	{
+		translate([0,0,-1])
+		cylinder(r=m3_diameter/2,h=base_thickness+2,$fn=8);
+
+		translate([0,0,base_thickness/2])
+		rotate(-hole_axis_rotation+180)
+		{
+//			rotate(30)
+			cylinder(r=m3_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
+			translate([0,-m3_nut_diameter,hole_slot_height/2+base_thickness/2]) 
+			cube([m3_nut_diameter,m3_nut_diameter*2,hole_slot_height],
+					center=true);
+		}
+	}
 }
