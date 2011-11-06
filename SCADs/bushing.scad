@@ -16,10 +16,10 @@ include <configuration.scad>
  * @id bushing
  */ 
 
-rodsize = bushing_rodsize;
+/*rodsize = bushing_rodsize;
 outerDiameter = bushing_outerDiameter;
 length = bushing_length;
-type = bushing_type;
+type = bushing_type;*/
 
 
 module bushing(stiff, length=11){
@@ -45,7 +45,7 @@ module bushing(stiff, length=11){
 }
 
 
-module standart_bushing(){
+module standard_bushing(){
 
 difference(){translate(v=[0,5,8])rotate(a=[90,0,0]){
 bushing(false, 10);
@@ -100,35 +100,49 @@ union(){translate([0,9.5,0])vertical_bushing(true,13);
 }
 }
 
-z_bushings();
-//z_linear_bearings();
+//z_bushings();
+z_linear_bearings();
+//lm8uu_bearing_holder();
 
+clearance=0.2;
+
+lm8uu_diameter=linear_bearing_diameter+clearance;
+lm8uu_length=linear_bearing_length+clearance;
+
+lip_height=2;
+lip_depth=2;
+holder_thickness=2.3;
+
+z_linear_bearings_height = 3*lip_height+2*lm8uu_length;
 
 module z_linear_bearings(){
-translate(v=[0,9.5,0]) rotate(a=[0,0,90]){
-difference(){
-union(){
-//main block
-translate(v=[-5,0,32.5]) cube(size = [10,20,65], center = true);
-//holder for main block in x-end
-translate(v=[-5,0,15.8/2]) cube(size = [12,23,15.8], center = true);
-translate(v=[0,0,0]) cylinder(h = 65, r=10, $fn=60);
-}
-//main axis
-translate(v=[0,0,-2]) cylinder(h = 70, r=7.7, $fn=50);
-//main cut
-translate(v=[10,0,32.5]) cube(size = [20,12,70], center = true);
-//smooth entry cut
-translate(v=[14,0,32.5]) rotate(a=[0,0,45]) cube(size = [20,20,70], center = true);
-translate(v=[0,0,14.5+2]) ziptie();
-translate(v=[0,0,65-(12+2)-5]) ziptie();
-}
-translate(v=[-(10-5.5)/2-5.5,0,0+1]) cube(size = [10-5.5,20,2], center = true);
-translate(v=[-(10-5.5)/2-5.5,0,24.5+2+1]) cube(size = [10-5.5,20,2], center = true);
+	translate(v=[0,9.5,0]) rotate(a=[0,0,90]){
+		difference(){
+			union(){
+				//main block
+				translate(v=[-5,0,z_linear_bearings_height/2]) cube(size = [lm8uu_diameter/2+holder_thickness,2*(lm8uu_diameter/2+holder_thickness),z_linear_bearings_height], center = true);
+			
+				//holder for main block in x-end
+				translate(v=[-5,0,15.8/2]) cube(size = [12,23,15.8], center = true);
+				translate(v=[0,0,0]) cylinder(h = z_linear_bearings_height, r=lm8uu_diameter/2+holder_thickness, $fn=60);
+			}
+	
+			//main axis
+			translate(v=[0,0,-2]) cylinder(h = z_linear_bearings_height+4, r=lm8uu_diameter/2, $fn=50);
+		
+			//main cut
+			translate(v=[10,0,z_linear_bearings_height/2]) cube(size = [20,12,z_linear_bearings_height+2], center = true);
 
-translate(v=[-(10-5.5)/2-5.5,0,65-1]) cube(size = [10-5.5,20,2], center = true);
-translate(v=[-(10-5.5)/2-5.5,0,65-24.5-2-1]) cube(size = [10-5.5,20,2], center = true);
-}
+			//smooth entry cut
+			translate(v=[14,0,z_linear_bearings_height/2]) rotate(a=[0,0,45]) cube(size = [20,20,z_linear_bearings_height+2], center = true);
+			translate(v=[0,0,14.5+2]) ziptie();
+			translate(v=[0,0,z_linear_bearings_height-(12+2)-5]) ziptie();
+		}
+		translate(v=[-(10-5.5)/2-5.5,0,lip_height/2]) cube(size = [10-5.5,20,lip_height], center = true);
+		translate(v=[-(10-5.5)/2-5.5,0,lm8uu_length+3/2*lip_height]) cube(size = [10-5.5,20,lip_height], center = true);
+		translate(v=[-(10-5.5)/2-5.5,0,z_linear_bearings_height-lip_height/2]) cube(size = [10-5.5,20,lip_height], center = true);
+
+	}
 }
 
 module ziptie(){
@@ -140,18 +154,14 @@ translate(v=[0,0,3]) cylinder(h = 1, r1=10-1, r2=10.2, $fn=50);
 
 
 // Gregs
-clearance=0.7;
 
-lm8uu_diameter=15+clearance;
-lm8uu_length=24+clearance;
 lm8uu_support_thickness=3.2; 
-lm8uu_end_diameter=m8_diameter+1.5;
+lm8uu_end_diameter=m8_diameter+2*clearance;
 
 lm8uu_holder_width=lm8uu_diameter+2*lm8uu_support_thickness;
 lm8uu_holder_length=lm8uu_length+2*lm8uu_support_thickness;
 lm8uu_holder_height=lm8uu_diameter*0.75+lm8uu_support_thickness;
 lm8uu_holder_gap=(lm8uu_holder_length-6*lm8uu_support_thickness)/2;
-
 module lm8uu_bearing_holder()
 {
 	translate([-lm8uu_holder_width/2,-lm8uu_holder_length/2,-5])difference()

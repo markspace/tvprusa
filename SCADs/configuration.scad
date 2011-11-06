@@ -31,6 +31,8 @@ thin_wall = 4*layer_height*wot;
 
 // LM8UU
 linear = true;
+linear_bearing_diameter=15;
+linear_bearing_length=24;
 
 //608 bearing
 bearing_diameter = 22.6;
