@@ -138,7 +138,7 @@ module xendcorners(dia1, dia2, dia3, dia4, height=0){
 //xendcorners(5,5,5,5,0);
 
 //difference(){
-	xend(closed_end=true);
+	xend(closed_end=true, linear_bearing=linear);
 	//translate(v = [15, -40, 0]) cube(size = [20,100,20]);
 
 	//translate(v = [-15-20, -40, 0]) cube(size = [20,100,20]);
