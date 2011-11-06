@@ -28,8 +28,7 @@ pad_connector_height=3.3;
 bushing_support_width=17;
 rod_support_width=10;
 
-module xend_side(closed_end=true)
-{
+module xend_side(closed_end=true){
 	translate([25,0,0])
 	difference (){
 		union(){
@@ -82,34 +81,27 @@ module xend_side(closed_end=true)
 			}
 		}
 		
-		
-
-		
-
 		for (i=[0:5])
-		translate([-axis_diameter_larger+2,5+2.5+5*i,-7+0.6]) 
-		cylinder(h=2,r=0.4,$fn=6,center=true);
+			translate([-axis_diameter_larger+2,5+2.5+5*i,-7+0.6]) 
+			cylinder(h=2,r=0.4,$fn=6,center=true);
 		for (i=[0:6])
-		translate([-axis_diameter_larger-2,5+5*i,-7+0.6])
-		cylinder(h=2,r=0.4,$fn=6,center=true);
+			translate([-axis_diameter_larger-2,5+5*i,-7+0.6])
+			cylinder(h=2,r=0.4,$fn=6,center=true);
 	}
 }
+
 //xend_side();
-module xend(closed_end=true, linear_bearing=false)
-{
+
+module xend(closed_end=true, linear_bearing=false){
 	
 	if(linear_bearing==true) z_linear_bearings();
 	if(linear_bearing==false) z_bushings();	
-difference()
-	{
-		union ()
-		{
-			translate(v = [0,-25,xend_height/2])
-			{
+	difference(){
+		union (){
+			translate(v = [0,-25,xend_height/2]){
 				xend_side(closed_end=closed_end,curved_sides=0);
 				mirror([1,0,0]) xend_side(closed_end=closed_end,curved_sides=0);
 			}	
-
 
 			//Nut Trap
 			translate([0,-20,0]) //
@@ -121,8 +113,7 @@ difference()
 		cube([22.5,22.5,70],center=true);
 
 		//Rod hole.
-		difference()
-		{
+		difference(){
 			translate([0,-20,39.5]) 
 			cylinder(h=90,r=m8_nut_diameter/2,$fn=6,center=true);
 			translate([0,-20,8.5]) 
@@ -133,11 +124,9 @@ difference()
 	}
 }
 
-module xendcorners(dia1, dia2, dia3, dia4, height=0)
-{
+module xendcorners(dia1, dia2, dia3, dia4, height=0){
 	translate(v = [0,35,24.5]) 
-	union()
-	{ 
+	union(){ 
 		//round corners
 		translate(v = [33.1, -60.1, -25]) rotate(a=[0,0,90]) roundcorner(dia1);
 		translate(v = [33.1, -19.9, -25]) rotate(a=[0,0,-180]) roundcorner(dia2);
@@ -145,14 +134,16 @@ module xendcorners(dia1, dia2, dia3, dia4, height=0)
 		translate(v = [-33.1, -19.9, -25]) rotate(a=[0,0,-90]) roundcorner(dia4);
 	}
 }
+
 //xendcorners(5,5,5,5,0);
+
 //difference(){
-xend(true);
-//translate(v = [15, -40, 0]) cube(size = [20,100,20]);
+	xend(closed_end=true);
+	//translate(v = [15, -40, 0]) cube(size = [20,100,20]);
 
-//translate(v = [-15-20, -40, 0]) cube(size = [20,100,20]);
+	//translate(v = [-15-20, -40, 0]) cube(size = [20,100,20]);
 
-//translate(v = [-50, -45, 0]) cube(size = [100,40,100]);
+	//translate(v = [-50, -45, 0]) cube(size = [100,40,100]);
 //}
 
 //xend_side();
