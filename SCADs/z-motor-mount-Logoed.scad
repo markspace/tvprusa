@@ -26,7 +26,7 @@ include <OpenScadFont.scad>
 
  $fs=0.5;
 Side="left";					// Mounted on 'left' or 'right'
-Plaque_type="Serial";			// Include either the 'Logo' or 'Serial'
+Plaque_type="Logo";			// Include either the 'Logo' or 'Serial'
 
 Logo_Source="TVRR.dxf";		// Source file for Logo
 Serial=["0","1","#","0","1"];		// Number for Serial
@@ -77,8 +77,8 @@ module plaque(){
 			minkowski(){
 				cube([40,2.5,15],center=true);
 				translate([0,0,00]){sphere(r=1.48);}
-			
-		if (Plaque_type=="Logo"){rotate([90,0,180]){translate([-17.5,-6.5,3]){scale([0.75,0.75,1]){linear_extrude(file=Logo_Source, height=5, center=true);}}}}}
+			}
+		if (Plaque_type=="Logo"){rotate([90,0,180]){translate([-17.5,-6.5,3]){scale([0.75,0.75,1]){linear_extrude(file=Logo_Source, height=5, center=true);}}}}
 		if (Plaque_type=="Serial") { translate([12,0.5,0]) rotate([-90,90,0]) scale([1.25,1.25,1]) fnt_str(Serial,5,1,5);}
 		}
 }
