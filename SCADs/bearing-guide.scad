@@ -2,6 +2,8 @@
 // GNUGPLv2
 // GregFrost
 
+include <configuration.scad>
+
 /**
  * Helps to hold belt aligned on the bearing.
  * @id bearing-guide
