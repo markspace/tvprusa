@@ -24,7 +24,7 @@ corection = 1.17;
 
 use <x-end.scad>
 
-xendmotor(endstop_mount=true,curved_sides=true,closed_end=true,luu_version=true);
+xendmotor(endstop_mount=true,curved_sides=true,closed_end=true,luu_version=false);
 
 module xendmotor(endstop_mount=false,curved_sides=false,closed_end=true,luu_version=false)
 {

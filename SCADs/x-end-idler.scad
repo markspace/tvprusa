@@ -25,6 +25,8 @@ use <teardrop.scad>
 
 wall_thickness=5;
 
+xendidler(closed_end=false,curved_sides=true,luu_version=false);
+
 module xendidler(closed_end=true,curved_sides=true,luu_version=false)
 {
 	difference()
@@ -75,4 +77,4 @@ module xendidler(closed_end=true,curved_sides=true,luu_version=false)
 	}
 }
 
-xendidler(closed_end=false,curved_sides=true,luu_version=true);
+
