@@ -1,63 +1,38 @@
-
-
 m3_nut_diameter= 7;
-m3_diameter=4.4;
+m3_diameter=4;
 
-module block(){
+module hex_hole()
+	{
+	rotate([90,22.5,0]) cylinder(h = 8, r=m3_diameter/2, $fn=8); // M3 hole
+	rotate([90,0,0]) translate ([0,0,5]) cylinder(h = 3, r=m3_nut_diameter/2, $fn=6); // M3 hex 
+	}
 
+module block()
+	{
+	difference()
+		{
+		union()
+			{
+			translate([0,10,12]) cube ([40,6,24], center=true);
+			cylinder(24,r=12,$fn=100);
+			}
 
-difference(){
-union(){
-difference(){
-// cube([22,22,24]); 
+		union()
+			{
+			translate([-1,-13,-1]) cube([2,14,26]); 
+			translate([0,0,-1]) cylinder( 26, r=6, $fn=100);
+			translate([0,0,-1]) cylinder( 26, r=7.55,$fn=100); // COMMENT OUT FOR END STOP
+//			translate([0,0,2]) cylinder( 26, r=7.55, $fn=100); // UNCOMMENT FOR END STOP
+			}
+		}
+	}
 
+difference()
+	{
+	block();
 
-//translate([11,11,3]) cylinder(72,7.55,7.55,$fn=100);
-//translate([11,11,-0.1]) cylinder(72,6,6,$fn=100);
-
-}
-
-
-translate([-9,16,0]) cube ([40,8,24]);
-
-translate([11,11,-0.1]) cylinder(24,12,12,$fn=100);
-
- 
-
-}
-
-
-translate([10,-2,-0.1]) cube([2,14,26]); 
-
-translate([11,11,3]) cylinder(72,7.55,7.55,$fn=100);
-translate([11,11,-0.1]) cylinder(72,6,6,$fn=100);
-
-// UNCOMMENT FOR NO END STOP
-translate([11,11,-0.1]) cylinder(72,7.62,7.62,$fn=100);
-
-translate(v = [-4.5,14, 5]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex 
-translate(v = [-4.5, 14, 5]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-
-translate(v = [26.5,14, 5]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex 
-translate(v = [26.5, 14, 5]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-
-translate(v = [-4.5,14, 19]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex 
-translate(v = [-4.5, 14,19]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-
-translate(v = [26.5,14,19]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex 
-translate(v = [26.5, 14, 19]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-
-
-//translate(v = [-4, -8, 2]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex
-//translate(v = [-4, -8, 3.75]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-
-}
-}
-
-translate([10,0,0])
-block();
-
-//translate(v = [-4,20, 5]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex 
-//translate(v = [-4, 20, 5]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
-//translate(v = [-4, -8, 2]) rotate(a=[270,0,0]) cylinder(h = 9, r=m3_nut_diameter/2, $fn=6, center=true); // M3 hex
-//translate(v = [-4, -8, 3.75]) rotate(a=[270,0,0]) cylinder(h = 100, r=m3_diameter/2, $fn=9, center=true); // M3 hole
+	translate ([-15.5,14,5]) hex_hole();
+	translate ([15.5,14,5]) hex_hole();
+	translate ([-15.5,14,19]) hex_hole();
+	translate ([15.5,14,19]) hex_hole();
+	}
