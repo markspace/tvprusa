@@ -39,7 +39,7 @@ module endstop()
 			translate( [-4-3-screw_hole_spacing, -3, 0] ) cube( [6, 5, 10] );
 			
 			translate( [-27-25, 0, 0] ) cube( [35 + 40, 4, 10] );
-			translate( [17, 17.5, 5] ) rotate( [90, 0, 0] ) #cylinder( h = 5, r = 5.77, $ fn = 6 );
+			translate( [17, 17.5, 5] ) rotate( [90, 0, 0] ) #cylinder( h = 5, r = 5.77, $fn = 6 );
 		
 			translate( [-( 4 + screw_hole_spacing ), 0, 0] ) translate( [0, 7, 5] ) rotate( [90, 0, 0] ) #cylinder( h = 5, r = 5.77, $fn = 6 );
 			translate( [-4, 0, 0] ) translate( [0, 7, 5] ) rotate( [90, 0, 0] ) #cylinder( h = 5, r = 5.77, $fn = 6 );
