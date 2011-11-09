@@ -1,5 +1,4 @@
-m3_nut_diameter= 7;
-m3_diameter=4;
+include <configuration.scad>
 
 module hex_hole()
 	{
