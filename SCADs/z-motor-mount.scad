@@ -8,6 +8,8 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/prusajr/PrusaMendel
 include <configuration.scad>
+include <OpenScadFont.scad>
+
 
 /**
  * @id z-motor-mount
@@ -20,7 +22,18 @@ include <configuration.scad>
  * @using 4 m8washer
  * @using 1 rod-clamp
  */
- 
+
+
+ $fs=0.5;
+Side="right";					// Mounted on 'left' or 'right', 'neither' or 'both'
+Plaque_type="Logo";			// Include either the 'Logo' or 'Serial'
+
+Logo_Source="TVRR.dxf";		// Source file for Logo
+Serial=["0","1","#","0","1"];		// Number for Serial
+
+
+
+
 module zmotormount(){
 difference(){
 union(){
@@ -56,4 +69,22 @@ translate(v=[0,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter,
 
 }
 }
-zmotormount();
+
+module plaque(){
+
+
+		difference(){
+			minkowski(){
+				cube([40,2.5,15],center=true);
+				translate([0,0,00]){sphere(r=1.48);}
+			}
+		if (Plaque_type=="Logo"){rotate([90,0,180]){translate([-20,-6.5,3]){scale([0.75,0.75,1]){linear_extrude(file=Logo_Source, height=5, center=true);}}}}
+		if (Plaque_type=="Serial") { translate([12,0.5,0]) rotate([-90,90,0]) scale([1.25,1.25,1]) fnt_str(Serial,5,1,5);}
+		}
+}
+
+union(){
+	zmotormount();
+	if (Side=="left" || Side=="both")	{ translate([1,-24.25,15])	{rotate([0,0,180])	{plaque();}}}
+	if (Side=="right"|| Side=="both") 	{ translate([1,24.25,15])	{rotate([0,0,000])	{plaque();}}}
+}
