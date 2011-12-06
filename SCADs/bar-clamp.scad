@@ -35,8 +35,8 @@ module barclamp()
 		}
 
 		translate( [18, outer_diameter, 9] ) cube( [18, 5, 20], center = true );
-		translate( [outer_diameter, outer_diameter, -1] ) #cylinder( h = 20, r = m8_diameter / 2, $fn = 18 );
-		translate( [17, 17, 7.5] ) rotate( [90, 0, 0] ) #cylinder( h = 20, r = m8_diameter / 2, $fn = 20 );
+		translate( [outer_diameter, outer_diameter, -1] ) #polyhole( m8_diameter, 20 );
+		translate( [17, 17, 7.5] ) rotate( [90, 0, 0] ) #polyhole( m8_diameter, 20 );
 	}
 }
 
