@@ -29,6 +29,13 @@ depth = m3_diameter + 2* hole_padding;
 
 notches = ceil(depth/belt_pitch)/2;
 
+beltclamp();
+translate([0,-(depth+2),0]) beltclamp();
+translate([0,-2*(depth+2),0]) beltclamp();
+
+translate([0,depth+2,0]) 
+belt_tensioner(tensioner_height);
+
 module beltclamp(){
 	difference(){
 
@@ -71,7 +78,3 @@ module belt_tensioner(hght){
 }
 	
 
-beltclamp();
-
-translate([0,depth+2,0]) 
-belt_tensioner(tensioner_height);
