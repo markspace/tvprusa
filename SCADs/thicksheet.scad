@@ -1,7 +1,7 @@
 smooth_bar_size = 8;
 smooth_bar_spacing = 140;
 
-hole_size = 3;
+hole_size = 3.2;
 hole_padding = 8;
 
 heated_bed_hole_spacing = 209;
@@ -14,7 +14,7 @@ lm8uu_holder_w = 31;
 lm8uu_holder_edge_offset = 5;
 
 belt_clamp_hole_size = hole_size;
-belt_clamp_hole_spacing = 17;
+belt_clamp_hole_spacing = 18;
 belt_clamp_centre_offset = 18;
 belt_clamp_edge_offset = 15;
 
