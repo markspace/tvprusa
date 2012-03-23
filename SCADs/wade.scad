@@ -104,6 +104,28 @@ wadeidler();
 
 //import_stl("idler.stl");
 
+//Extruder mounting plate
+//mount();
+
+/*Layout for laser cutting mounts from 300x145mm ply*/
+
+/*mount_layout();
+module mount_layout(ply_size=[300,145], n=[4,5])
+{
+	mount_size=[70,28];
+	gap=[(ply_size[0]-n[0]*mount_size[0])/(n[0]+1),(ply_size[1]-n[1]*mount_size[1])/(n[1]+1)];
+
+%	square(ply_size);
+
+	for ( i = [ 1 : 4 ]) 
+	{
+		for ( j = [ 1 : 5 ])
+		{
+			translate([i*gap[0] + (i-1)*mount_size[0],j*gap[1]+ (j-1)*mount_size[1],0]) mount();
+		}
+	}
+}*/
+
 //===================================================
 // Parameters defining the wade body:
 wade_block_height=55;
@@ -740,4 +762,9 @@ module j_head_holes ()
 					center=true);
 		}
 	}
+}
+
+module mount() 
+{
+	translate([25,wade_block_depth,0]) projection(cut=true) rotate([90,0,0]) wade(hotend_mount=j_head);
 }
