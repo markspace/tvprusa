@@ -75,11 +75,12 @@ module print_top()
 		translate( [heated_bed_hole_spacing / 2, heated_bed_hole_spacing / 2, 0] ) hi_res_circle( heated_bed_hole_size / 2 );
 
 		//Bulldog clip notches
-		translate( [-clip_centre_offset, -( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2), 0] ) clip_notch( clip_w, (print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
+/*		translate( [-clip_centre_offset, -( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2), 0] ) clip_notch( clip_w, (print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
 		translate( [clip_centre_offset, -( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
 		translate( [-clip_centre_offset, ( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w - glass ) / 2 + clip_glass_overlap + 1 );
-		translate( [clip_centre_offset, ( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
-		
+		translate( [clip_centre_offset, ( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );*/
+	
+translate([0,(print_bottom_w/2 - 7.5),0])rotate([0,0,180])import(file="TVRRoutline.dxf");	
 	}
 }
 
