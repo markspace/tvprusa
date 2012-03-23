@@ -4,7 +4,7 @@
 // Extruder based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
 
-include<configuration.scad>
+include <configuration.scad>
 
 // Define the hotend_mounting style you want by specifying hotend_mount=style1+style2 etc.
 malcolm_hotend_mount=1;
@@ -326,7 +326,7 @@ module block_holes()
 	}
 
 	// Round the bottom front corner.
-	translate ([-base_leadout-base_thickness/2,-1,-2])
+	translate ([-base_leadout-base_thickness/2,-1,0])
 	render()
 	difference() 
 	{
@@ -334,6 +334,18 @@ module block_holes()
 		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
 		rotate([-90,0,0])
 		translate([block_bevel_r,-block_bevel_r,-1])
+		cylinder(r=block_bevel_r,h=base_thickness+4);
+	}
+
+	// Round the bottom front corner.
+	translate ([base_length-base_leadout+base_thickness/2-block_bevel_r,-1,0])
+	render()
+	difference() 
+	{
+		translate([0,0,-1])
+		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
+		rotate([-90,0,0])
+		translate([0,-block_bevel_r,-1])
 		cylinder(r=block_bevel_r,h=base_thickness+4);
 	}
 
@@ -393,7 +405,7 @@ module block_holes()
 				rotate([-90,0,0])
 				rotate(360/16)
 				cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);	
-	
+		
 				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
 					-motor_mount_translation[1]+base_thickness/2,
 					wade_block_depth/2])
