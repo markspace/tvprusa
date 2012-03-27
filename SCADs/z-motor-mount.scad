@@ -8,6 +8,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/prusajr/PrusaMendel
 include <configuration.scad>
+use <NEMA17.scad>
 
 /**
  * @id z-motor-mount
@@ -20,16 +21,17 @@ include <configuration.scad>
  * @using 4 m8washer
  * @using 1 rod-clamp
  */
+
  
 module zmotormount(){
 difference(){
 union(){
-translate(v=[2.5,0,0]) cube(size = [55,60,16], center = true);
-translate(v=[2.5,0,-4]) cube(size = [55,74.5-16,8], center = true);
-translate(v=[-25,29.25,0]) rotate(a=[0,90,0]) cylinder(h = 55, r=8, $fn=30);
-translate(v=[-25,-29.25,0]) rotate(a=[0,90,0]) cylinder(h = 55, r=8, $fn=30);
+translate(v=[2,0,0]) cube(size = [55,60,16], center = true);
+translate(v=[2,0,-4]) cube(size = [55,74.5-16,8], center = true);
+translate(v=[-25.5,29.25,0]) rotate(a=[0,90,0]) cylinder(h = 55, r=8, $fn=30);
+translate(v=[-25.5,-29.25,0]) rotate(a=[0,90,0]) cylinder(h = 55, r=8, $fn=30);
 }
-translate(v=[-2.1,0,2.8]) cube(size = [46,43,13], center = true);
+translate(v=[-5,0,4.3]) cube(size = [43+10,43,16], center = true);
 
 // reducing the material
 translate(v=[10.5-2.5,34.5,-4]) cube(size = [25,20,30], center = true);
@@ -37,23 +39,35 @@ translate(v=[10.5-2.5,-34.5,-4]) cube(size = [25,20,30], center = true);
 translate(v=[-10,0,0]) translate(v=[5.5,24.5,-10]) rotate(a=[0,0,45]) cube(size = [20,20,30]);
 translate(v=[-10,0,0]) translate(v=[5.5,-24.5,-10]) rotate(a=[0,0,225]) cube(size = [20,20,30]);
 
-// Nema 17
-rotate ([0,0,45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-rotate ([0,0,-45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-rotate ([0,0,135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-rotate ([0,0,-135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
-translate(v=[0,0,-10])polyhole(26,20);
+//// Nema 17
+rotate ([0,0,0]) translate([31/2-1,31/2,0]) cube(size = [7,3.2,25], center = true);
+rotate ([0,0,0]) translate([-31/2-1,31/2,0]) cube(size = [7,3.2,25], center = true);
+rotate ([0,0,0]) translate([31/2-1,-31/2,0]) cube(size = [7,3.2,25], center = true);
+rotate ([0,0,0]) translate([-31/2-1,-31/2,0]) cube(size = [7,3.2,25], center = true);
+translate(v=[.5,0,-10]) polyhole(26,20);
+translate(v=[-2.5,0,-10]) polyhole(26,20);
+rotate ([0,0,0]) translate([-1,0,0]) cube(size = [3,26,25], center = true);
 
-translate(v=[30,0,-10]) cylinder(h = 20, r=4.2);
-translate(v=[-26,29.25,0]) rotate(a=[0,90,0]) cylinder(h = 58, r=m8_diameter/2);
-translate(v=[-26,-29.25,0]) rotate(a=[0,90,0]) cylinder(h = 58, r=m8_diameter/2);
+translate(v=[29.5,0,-10]) cylinder(h = 20, r=4.2);
+translate(v=[-26,29.25,0]) rotate(a=[0,90,0]) #cylinder(h = 58, r=8.3/2, $fn=20);
+translate(v=[-26,-29.25,0]) rotate(a=[0,90,0]) #cylinder(h = 58, r=8.3/2, $fn=20);
 
 
-translate(v=[16,7,0]) rotate(a=[0,90,0]) polyhole(m3_diameter,15);
-translate(v=[16,-7,0]) rotate(a=[0,90,0]) polyhole(m3_diameter,15);
-translate(v=[0,7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 24, true);
-translate(v=[0,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 24, true);
+translate(v=[16,7,0]) rotate ([22.5, 0,0]) rotate(a=[0,90,0]) cylinder(h = 15, r=m3_diameter/2, $fn=8);
+translate(v=[16,-7,0]) rotate ([22.5, 0,0]) rotate(a=[0,90,0]) cylinder(h = 15, r=m3_diameter/2, $fn=8);
+translate(v=[0,7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 25, true);
+translate(v=[0,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 25, true);
 
 }
 }
-zmotormount();
+
+translate ([0,0,-0.1]) %cube ([190,190,0.1], center = true);
+
+//for (i = [0:3])
+//{
+//translate(v=[i*25-25-12.5,0,29.45]) rotate ([0,90,0]) zmotormount();
+//}
+
+echo (m8_diameter);
+translate(v=[0,0,29.45]) rotate ([0,90,0]) zmotormount();
+//translate(v=[0,0,32.5]) rotate ([0,90,0]) nema17();
