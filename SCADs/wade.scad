@@ -736,7 +736,7 @@ module grrf_peek_mount_holes()
 module j_head_holes () 
 {
 	extruder_recess_d=17;
-	extruder_recess_h=16; 
+	extruder_recess_h=10; 
 	hole_axis_rotation=42.5; 
 	hole_separation=30;
 	hole_slot_height=5;
