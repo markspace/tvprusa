@@ -8,7 +8,6 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/prusajr/PrusaMendel
 include <configuration.scad>
-use <NEMA17.scad>
 
 /**
  * @id z-motor-mount
@@ -70,4 +69,3 @@ translate ([0,0,-0.1]) %cube ([190,190,0.1], center = true);
 
 echo (m8_diameter);
 translate(v=[0,0,29.45]) rotate ([0,90,0]) zmotormount();
-//translate(v=[0,0,32.5]) rotate ([0,90,0]) nema17();
