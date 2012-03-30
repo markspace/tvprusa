@@ -9,13 +9,13 @@
 
 module nut( d, h, horizontal = true )
 {
-	cornerdiameter = ( d / 2 ) / cos( 180 / 6 );
-	cylinder( h = h, r = cornerdiameter, $fn = 6 );
+	cornerradius = nutcornerdiameter(d)/2;
+	cylinder( h = h, r = cornerradius, $fn = 6 );
 	if( horizontal )
 	{
 		for( i = [1 : 6] )
 		{
-			rotate( [0, 0, 60 * i] ) translate( [-cornerdiameter - 0.2, 0, 0] ) rotate( [0, 0, -45] ) cube( size = [2, 2, h] );
+			rotate( [0, 0, 60 * i] ) translate( [-cornerradius - 0.2, 0, 0] ) rotate( [0, 0, -45] ) cube( size = [2, 2, h] );
 		}
 	}
 }
@@ -35,3 +35,5 @@ module roundcorner( diameter )
 		translate( v = [diameter, diameter, 0] ) cylinder( h = 100, r = diameter, center = true );
 	}
 }
+
+function nutcornerdiameter(d) = ( d ) / cos( 180 / 6 );
