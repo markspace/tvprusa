@@ -35,11 +35,11 @@ module springseat() {
      // from the spring seat solid
         union(){
             // base washer
-               cylinder(h=sectionh, r1=springor, r2=springor, center=false, $fn=smoothness);
+               cylinder(h=sectionh, r=springor, center=false, $fn=smoothness);
             // retainer section
-               translate(v = [0, 0, sectionh] ) cylinder(h=sectionh, r1=springir, r2=springir, center=false, $fn=smoothness);
+               cylinder(h=sectionh*2, r=springir, center=false, $fn=smoothness);
          }
          // subtract the hole 
-           cylinder(h=seath, r1=holer, r2=holer, center=false, $fn=smoothness);
+          # translate ([0,0,-1]) cylinder(h=seath+2, r=holer, center=false, $fn=smoothness);
    }
 }
