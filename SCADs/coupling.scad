@@ -60,7 +60,7 @@ module coupling(c)
 
 			//shaft groves
 			translate( [-16, 0, 4.5] ) rotate( [0, 90, 0] ) cylinder( h = 16, r = threaded_rod_diameter / 2, $fn = 16 );
-			translate( [-0.5, 0, 4.5] ) rotate( [0, 90, 0] ) cylinder( h = 16, r = threaded_rod_diameter / 2,  $fn = 16 );
+			translate( [-0.5, 0, 4.5] ) rotate( [0, 90, 0] ) cylinder( h = 16, r = shaft_dia / 2,  $fn = 16 );
 
 			//screw holes
 			translate( [holeX,  holeY, -10] ) polyhole( m3_diameter, 20 );
