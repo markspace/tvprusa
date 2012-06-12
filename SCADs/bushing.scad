@@ -16,11 +16,11 @@ include <configuration.scad>
  * @id bushing
  */ 
 
-z_linear_bearings( luu_version = true );
+z_linear_bearings( luu_version = false );
 //ziptie();
 
 luu_height = 48;
-uu_height = 24;
+uu_height = linear_bearing_length;
 
 module z_linear_bearings( luu=false , override_height = -1 )
 {
@@ -41,7 +41,7 @@ module z_linear_bearings( luu=false , override_height = -1 )
 			}
 
 			//main axis
-			translate( [0, 0, -2] ) cylinder( h = height + 5, r = 7.7, $fn = 50 );
+			translate( [0, 0, -2] ) #cylinder( h = height + 5, r = linear_bearing_diameter/2, $fn = 50 );
 
 			//main cut
 			translate( [10, 0, height / 2] ) cube( [20, 14, height + 5], center = true);
