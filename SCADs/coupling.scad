@@ -28,8 +28,7 @@ include <configuration.scad>
  * @category Nuts&bolts
  */
 
-translate( [0, 14, 0] ) coupling( c = 0 );
-translate( [0, -14, 0] ) rotate( [0, 0, 180] ) coupling( c = 1 );
+coupling();
 
 holeX = 7.5;
 holeY = 6.5;
@@ -38,7 +37,7 @@ corner_cut = 26;
 
 shaft_dia = 8.0;
 
-module coupling(c)
+module coupling()
 {
 	union()
 	{
@@ -46,17 +45,12 @@ module coupling(c)
 		{
 			cube( size = [30, 25, 8], center = true );
 
-			if( c == 1 )
-			{
 				//slot
 				*cube(size = [2, 40, 30], center = true);
                 
-				//nut holes
-				translate( [holeX,  holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
-				translate( [holeX, -holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
-				translate( [-holeX,  holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
-				translate( [-holeX, -holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
-			}
+			//nut holes
+			translate( [holeX, -holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
+			translate( [-holeX,  holeY, m3_nut_thickness / 2 - 4.01 - 3 / 2] ) nut( m3_nut_diameter, m3_nut_thickness );
 
 			//shaft groves
 			translate( [-16, 0, 4.5] ) rotate( [0, 90, 0] ) cylinder( h = 16, r = threaded_rod_diameter / 2, $fn = 16 );
@@ -75,13 +69,8 @@ module coupling(c)
 			rotate( [0, 0, -150] ) translate( [corner_cut, 0, 0] ) cube( size = [20,40,20], center = true );
 		}
 
-		if( c == 1 )
-		{
-			 // bridge
-			translate( [holeX, holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn = 6, center = true );
-			translate( [holeX, -holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn = 6, center = true );
-			translate( [-holeX,  holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn =6, center = true );
-			translate( [-holeX, -holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn =6, center = true );
-		}
+		 // bridge
+		translate( [holeX, -holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn = 6, center = true );
+		translate( [-holeX,  holeY, m3_nut_thickness - 3.9] ) cylinder( h = 0.4, r = m3_nut_diameter / 2 + 0.1, $fn =6, center = true );
 	}
 }
