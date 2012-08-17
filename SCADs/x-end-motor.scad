@@ -1,6 +1,6 @@
 // PRUSA Mendel  
 // X-end with NEMA 17 motor mount
-// GNU GPL v2
+// GNU GPL v3
 // Josef Průša
 // josefprusa@me.com
 // prusadjs.cz
@@ -9,7 +9,16 @@
 
 include <configuration.scad>
 use <teardrop.scad>
-corection = 1.17; 
+correction = 1.17; 
+
+z_rod_leadscrew_spacing=31.5;
+z_alignment_fix=z_rod_leadscrew_spacing-29.5;
+
+x_belt_center_offset=39.5;
+belt_width=5;
+motor_center_depth=2;
+motor_face_belt_center_offset=belt_width/2+motor_center_depth+2;
+x_belt_alignment_fix = x_belt_center_offset-(44-motor_face_belt_center_offset);
 
 /**
  * @id x-end-motor
@@ -24,19 +33,17 @@ corection = 1.17;
 
 use <x-end.scad>
 
-xendmotor(endstop_mount=false,curved_sides=true,closed_end=true,luu_version=false);
+xendmotor(curved_sides=true,closed_end=true,linear_bearing=true);
 
-module xendmotor(endstop_mount=false,curved_sides=false,closed_end=true,luu_version=false)
+module xendmotor(curved_sides=false,closed_end=true,linear_bearing=false)
 {
 	difference ()
 	{
 		union ()
 		{
-			xend(endstop_mount=endstop_mount,
-				closed_end=closed_end,
+			xend(closed_end=closed_end,
 				curved_sides=curved_sides,
-				override_height=luu_version?56.5:-1,
-				luu_version=luu_version);
+				linear_bearing=linear_bearing);
 //			import_stl("x-end.stl");
 		
 			positioned_motor_mount();
@@ -52,11 +59,12 @@ nema17_width=1.7*25.4;
 thickness=9;
 nema17_support_d=nema17_width-nema17_hole_spacing;
 motor_mount_rotation=[0,0,0];
-motor_mount_translation=[44-thickness,8,23.5-4.7-12+24.5];
+motor_mount_translation=[44-thickness+x_belt_alignment_fix,8+z_alignment_fix,23.5-4.7-12+24.5];
 
 top_corner=motor_mount_translation+[thickness,nema17_width/2,nema17_width/2];
 bridge_length=top_corner[0]-9;
-bridge_shear=0.48;
+//bridge_shear=0.48;
+bridge_shear=(top_corner[1]-nema17_support_d-z_alignment_fix)/bridge_length;
 
 module positioned_motor_mount()
 {
@@ -74,7 +82,7 @@ module positioned_motor_mount()
 				[-bridge_length,-nema17_support_d-bridge_shear*bridge_length,-2.5])
 				multmatrix([[1,0,0],[bridge_shear,1,0],[0,0,1]])
 				cube([bridge_length,nema17_support_d,6]);
-				#
+				
 				render()
 				translate(top_corner+[-thickness,-nema17_support_d,-nema17_support_d/2])
 				intersection()
@@ -86,6 +94,8 @@ module positioned_motor_mount()
 				}
 			}
 			
+			translate([-x_belt_alignment_fix/2,0,0])
+			scale([1+x_belt_alignment_fix/(thickness*2),1,1])
 			render()
 			intersection()
 			{
@@ -111,8 +121,9 @@ module positioned_motor_mount()
 		rotate(90) 
 		teardropcentering(6,42);
 
-		translate([20,-23,-1])
-		cube([8.5,36,20]);
+		translate(motor_mount_translation)
+		translate([-26.25-x_belt_alignment_fix,-nema17_width/2-1-16,-32])
+		cube([20,nema17_width+2,20]);
 	}
 }
 
@@ -152,14 +163,15 @@ module motor_mount_holes ()
 		for (hole=[3:5])
 		rotate([0,0,90*hole])
 		translate(nema17_hole_spacing*[1,1,0]/2)
-		translate([0,0,-24])
-		cylinder(h=25,r=7/2);
+		translate([0,0,-24-x_belt_alignment_fix])
+		cylinder(h=25+x_belt_alignment_fix,r=7/2);
 	}
 	
 	translate([-7/2-0.5-(nema17_width/2-nema17_hole_spacing/2),0,0])
 	rotate(270)
 	translate([0,0,-1])
 	cube([nema17_width/2,nema17_width/2,thickness+2]);
+
 }
 
 module barbell (r1,r2,r3,r4,separation) 
@@ -168,7 +180,7 @@ module barbell (r1,r2,r3,r4,separation)
 	x2=[separation,0];
 	x3=triangulate (x1,x2,r1+r3,r2+r3);
 	x4=triangulate (x2,x1,r2+r4,r1+r4);
-	# render()
+	render()
 	difference ()
 	{
 		union()

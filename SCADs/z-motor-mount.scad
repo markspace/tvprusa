@@ -26,6 +26,7 @@ alignment_fix=z_rod_leadscrew_spacing-30;
 
 module zmotormount()
 {
+	translate(v=[0,0,30+alignment_fix]) rotate ([0,90,0])
 	difference()
 	{
 		union()
@@ -37,12 +38,12 @@ module zmotormount()
 		}
 		translate(v=[-2.1+alignment_fix,0,2.8]) cube(size = [46,43,13], center = true);
 
-		// reducing the material
+/*		// reducing the material
 		translate(v=[10.5-2.5+alignment_fix,34.5,-4]) cube(size = [25,20,30], center = true);
 		translate(v=[10.5-2.5+alignment_fix,-34.5,-4]) cube(size = [25,20,30], center = true);
 		translate(v=[-10+alignment_fix,0,0]) translate(v=[5.5,24.5,-10]) rotate(a=[0,0,45]) cube(size = [20,20,30]);
 		translate(v=[-10+alignment_fix,0,0]) translate(v=[5.5,-24.5,-10]) rotate(a=[0,0,225]) cube(size = [20,20,30]);
-
+*/
 		// Nema 17
 		rotate ([0,0,45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
 		rotate ([0,0,-45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
@@ -50,18 +51,18 @@ module zmotormount()
 		rotate ([0,0,-135]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
 		translate(v=[0,0,-10])polyhole(26,20);
 
-		translate(v=[30+alignment_fix,0,-10]) cylinder(h = 20, r=4.2);
-		translate(v=[-26+alignment_fix,29.25,0]) rotate(a=[0,90,0]) cylinder(h = 58, r=m8_diameter/2);
-		translate(v=[-26+alignment_fix,-29.25,0]) rotate(a=[0,90,0]) cylinder(h = 58, r=m8_diameter/2);
+		translate(v=[30+alignment_fix,0,-10]) polyhole(h = 20, d=smooth_bar_diameter);
+		translate(v=[-26+alignment_fix,29.25,0]) rotate(a=[0,90,0]) polyhole(h = 58, d=threaded_rod_diameter);
+		translate(v=[-26+alignment_fix,-29.25,0]) rotate(a=[0,90,0]) polyhole(h = 58, d=threaded_rod_diameter);
 
 
 		translate(v=[16+alignment_fix,7,0]) rotate(a=[0,90,0]) polyhole(m3_diameter,15);
 		translate(v=[16+alignment_fix,-7,0]) rotate(a=[0,90,0]) polyhole(m3_diameter,15);
-		translate(v=[0+alignment_fix,7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 24, true);
-		translate(v=[0+alignment_fix,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 24, true);
+		translate(v=[-2.1+alignment_fix+m3_nut_thickness,7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 23, true);
+		translate(v=[-2.1+alignment_fix+m3_nut_thickness,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter, 23, true);
 
 	}
 }
 
-//translate(v=[0,0,30+alignment_fix]) rotate ([0,90,0]) 
+ 
 zmotormount();

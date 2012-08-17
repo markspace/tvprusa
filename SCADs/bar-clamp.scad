@@ -1,43 +1,58 @@
-// PRUSA Mendel  
-// Bar clamp
-// Used for joining 8mm rods
-// GNU GPL v2
-// Josef Průša
-// josefprusa@me.com
-// prusadjs.cz
-// http://www.reprap.org/wiki/Prusa_Mendel
-// http://github.com/prusajr/PrusaMendel
+/*
+ * New Y Clamp
+ *
+ * (C) Michel Pollet <buserror@gmail.com>
+ *
+ * This clamp is made to replace the existing prusa ones; the prusa ones have a tendency to break,
+ * and they also make positioning the Y smooth rods very difficult as the rod moves when you turn
+ * the M8 nuts on each side. Also, when you break one, you need to disassemble the whole frame to
+ * replace it.
+ *
+ * This one is made to be a bit squat, the 2 rods are in contact with each others so there is no
+ * plastic to flex. You can also clip it directly on the rod without disassembling the frame, and
+ * once the smooth rod is in, it prevents any unclipping. It also allows you to position the clamp
+ * secure one end, and tighened the other with negligeable rod movement.
+ *
+ * To print, make sure your slicer makes the walls "solid" otherwise it might flex too much. It's
+ * also a good idea to print a set of 4, or print slowly to make sure the "bridge" and overhang
+ * print nicely..
+ */
+$fn = 62;
 
-include <configuration.scad>
+// for 0.20mm layer, 0.35mm nozzle 00 this ensures "solid walls"
+shell = 2.7;
+m8rod = 7.80 / 2;
+m8smooth = 8.0 / 2;
 
-/**
- * @id bar-clamp
- * @name Bar clamp
- * @category Printed
- * @using 2 m8nut
- * @using 2 m8washer
- */ 
+smoothwidth = (m8smooth + shell) * 2;
+rodW = (m8rod + shell) * 2;
 
-barclamp();
-
-module barclamp()
-{
-	outer_diameter = m8_diameter / 2 + 3.3;
-
-	difference()
-	{
-		union()
-		{
-		
-			translate( [outer_diameter, outer_diameter, 0] ) cylinder( h = outer_diameter * 2, r = outer_diameter, $fn = 20);
-			translate( [outer_diameter, 0, 0] ) cube( [outer_diameter + 1.5, outer_diameter * 2, outer_diameter * 2] );
-			translate( [18, 2 * outer_diameter, outer_diameter] ) rotate( [90, 0, 0] ) nut( outer_diameter * 2, outer_diameter * 2, false);
-		}
-
-		translate( [18, outer_diameter, 9] ) cube( [18, 5, 20], center = true );
-		translate( [outer_diameter, outer_diameter, -1] ) #polyhole( m8_diameter, 20 );
-		translate( [17, 17, 7.5] ) rotate( [90, 0, 0] ) #polyhole( m8_diameter, 20 );
+difference() {
+	union() {
+		cylinder(r = m8rod + shell, h = smoothwidth);
+		translate([0, -(m8rod + shell), 0])
+			cube(size=[m8rod + m8smooth, rodW, smoothwidth]);
+		translate([m8rod + m8smooth, rodW / 2, smoothwidth / 2])
+			rotate([90,0,0])
+				cylinder(r = m8smooth + shell, h = rodW);
 	}
+
+	translate([0,0,-1])
+		cylinder(r = m8rod, h = smoothwidth + 2);	
+	translate([m8rod + m8smooth, (rodW / 2) + 1, rodW / 2])
+		rotate([90,0,0])
+				cylinder(r = m8smooth, h = rodW + 2);
+
+	translate([m8rod -0.5, -1, -1]) {
+		rotate([0,0,60])
+			cube(size=[rodW, m8rod * 1.8, rodW + 2]);
+		rotate([0,0,90])
+			cube(size=[rodW, m8rod * 1.2, rodW + 2]);
+	}
+
+	translate([m8rod,-m8rod,m8smooth+shell-0.1]) rotate([90,0,0]) scale(0.7)
+      linear_extrude( height = 30, center = true)
+            polygon(points = [[3.00,-5.00],[3.00,5.00],[-3.00,0.00]], paths = [[0,1,2]]);
 }
 
 

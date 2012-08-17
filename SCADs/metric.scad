@@ -17,19 +17,15 @@ smooth_bar_diameter = 8;
 smooth_bar_diameter_horizontal = 8.5;
 
 // Nuts and bolts
-// Nut diameters are flat to flat
 
 m8_diameter = 9;
 m8_nut_diameter = 16.4;
-m8_nut_thickness = 6.5;
 
 m4_diameter = 4.5;
 m4_nut_diameter = 9;
-m4_nut_thickness = 3.2;
 
 m3_diameter = 3.6;
 m3_nut_diameter = 6.1;
-m3_nut_thickness = 2.4;
 
 // Bushing holder
 

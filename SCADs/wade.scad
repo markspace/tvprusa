@@ -4,7 +4,7 @@
 // Extruder based on prusa git repo.
 // http://www.thingiverse.com/thing:6713
 
-include <configuration.scad>
+include<configuration.scad>
 
 // Define the hotend_mounting style you want by specifying hotend_mount=style1+style2 etc.
 malcolm_hotend_mount=1;
@@ -103,28 +103,6 @@ rotate([0,-90,90])
 wadeidler(); 
 
 //import_stl("idler.stl");
-
-//Extruder mounting plate
-//mount();
-
-/*Layout for laser cutting mounts from 300x145mm ply*/
-
-/*mount_layout();
-module mount_layout(ply_size=[300,145], n=[4,5])
-{
-	mount_size=[70,28];
-	gap=[(ply_size[0]-n[0]*mount_size[0])/(n[0]+1),(ply_size[1]-n[1]*mount_size[1])/(n[1]+1)];
-
-%	square(ply_size);
-
-	for ( i = [ 1 : 4 ]) 
-	{
-		for ( j = [ 1 : 5 ])
-		{
-			translate([i*gap[0] + (i-1)*mount_size[0],j*gap[1]+ (j-1)*mount_size[1],0]) mount();
-		}
-	}
-}*/
 
 //===================================================
 // Parameters defining the wade body:
@@ -348,7 +326,7 @@ module block_holes()
 	}
 
 	// Round the bottom front corner.
-	translate ([-base_leadout-base_thickness/2,-1,0])
+	translate ([-base_leadout-base_thickness/2,-1,-2])
 	render()
 	difference() 
 	{
@@ -356,18 +334,6 @@ module block_holes()
 		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
 		rotate([-90,0,0])
 		translate([block_bevel_r,-block_bevel_r,-1])
-		cylinder(r=block_bevel_r,h=base_thickness+4);
-	}
-
-	// Round the bottom front corner.
-	translate ([base_length-base_leadout+base_thickness/2-block_bevel_r,-1,0])
-	render()
-	difference() 
-	{
-		translate([0,0,-1])
-		cube([block_bevel_r+1,base_thickness+2,block_bevel_r+1]);
-		rotate([-90,0,0])
-		translate([0,-block_bevel_r,-1])
 		cylinder(r=block_bevel_r,h=base_thickness+4);
 	}
 
@@ -427,13 +393,12 @@ module block_holes()
 				rotate([-90,0,0])
 				rotate(360/16)
 				cylinder(r=m4_diameter/2,h=base_thickness+2,$fn=8);	
-		
+	
 				translate([-filament_feed_hole_offset+25*((mount<1)?1:-1),
 					-motor_mount_translation[1]+base_thickness/2,
 					wade_block_depth/2])
 				rotate([-90,0,0])
-		//		cylinder(r=m4_nut_diameter/2,h=base_thickness,$fn=6);
-				nut(d=m4_nut_diameter, h=base_thickness, horizontal=false);	
+				cylinder(r=m4_nut_diameter/2,h=base_thickness,$fn=6);	
 			}
 
 		}
@@ -454,10 +419,10 @@ module block_holes()
 				translate([0,0,-1])
 				cylinder(r=m3_diameter/2,h=wade_block_depth+6,$fn=6);	
 				translate([0,0,wade_block_width-idler_nut_trap_depth])
-				nut(d=m3_nut_diameter, h=idler_nut_thickness, horizontal=false);
+				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	
 			}
 			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])
-			cube([m3_nut_diameter,10,idler_nut_thickness],center=true);
+			cube([m3_nut_diameter*cos(30),10,idler_nut_thickness],center=true);
 		}
 	}
 }
@@ -570,8 +535,8 @@ module wadeidler()
 
 		//Nut trap for fulcrum screw.
 		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
-		rotate(360/12)
-		nut(d=m3_nut_diameter, h=3, horizontal=false);
+		rotate(360/16)
+		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
 
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[2-idler_height,0,0])
@@ -736,7 +701,7 @@ module grrf_peek_mount_holes()
 module j_head_holes () 
 {
 	extruder_recess_d=17;
-	extruder_recess_h=10; 
+	extruder_recess_h=16; 
 	hole_axis_rotation=42.5; 
 	hole_separation=30;
 	hole_slot_height=5;
@@ -756,15 +721,10 @@ module j_head_holes ()
 		rotate(-hole_axis_rotation+180)
 		{
 //			rotate(30)
-			nut(d=m3_nut_diameter, h=base_thickness/2+hole_slot_height, horizontal=false);
+			cylinder(r=m3_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
 			translate([0,-m3_nut_diameter,hole_slot_height/2+base_thickness/2]) 
-			cube([m3_nut_diameter/cos(30),m3_nut_diameter*2,hole_slot_height],
+			cube([m3_nut_diameter,m3_nut_diameter*2,hole_slot_height],
 					center=true);
 		}
 	}
-}
-
-module mount() 
-{
-	translate([25,wade_block_depth,0]) projection(cut=true) rotate([90,0,0]) wade(hotend_mount=j_head);
 }

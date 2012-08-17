@@ -23,18 +23,9 @@ belt_notch_length = belt_pitch/2+0.1;
 belt_notch_depth = 1.5;
 
 clamp_height = 7;
-tensioner_height=m3_nut_diameter+2+2*belt_notch_depth;
-width = 2*hole_padding + hole_spacing + m3_diameter ;
 depth = m3_diameter + 2* hole_padding;
 
 notches = ceil(depth/belt_pitch)/2;
-
-beltclamp();
-translate([0,-(depth+2),0]) beltclamp();
-translate([0,-2*(depth+2),0]) beltclamp();
-
-translate([0,depth+2,0]) 
-belt_tensioner(tensioner_height);
 
 module beltclamp(){
 	difference(){
@@ -78,3 +69,4 @@ module belt_tensioner(hght){
 }
 	
 
+beltclamp();

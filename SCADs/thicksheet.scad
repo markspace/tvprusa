@@ -1,7 +1,7 @@
 smooth_bar_size = 8;
 smooth_bar_spacing = 140;
 
-hole_size = 3.2;
+hole_size = 3;
 hole_padding = 8;
 
 heated_bed_hole_spacing = 209;
@@ -14,7 +14,7 @@ lm8uu_holder_w = 31;
 lm8uu_holder_edge_offset = 5;
 
 belt_clamp_hole_size = hole_size;
-belt_clamp_hole_spacing = 18;
+belt_clamp_hole_spacing = 17;
 belt_clamp_centre_offset = 18;
 belt_clamp_edge_offset = 15;
 
@@ -79,8 +79,7 @@ module print_top()
 		translate( [clip_centre_offset, -( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
 		translate( [-clip_centre_offset, ( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w - glass ) / 2 + clip_glass_overlap + 1 );
 		translate( [clip_centre_offset, ( print_bottom_w / 4 + glass / 4 - clip_glass_overlap / 2 ), 0] ) clip_notch( clip_w, ( print_bottom_w-glass ) / 2 + clip_glass_overlap + 1 );
-	
-translate([0,(print_bottom_w/2 - 7.5),0])rotate([0,0,180])import(file="TVRR1_0.dxf");	
+		
 	}
 }
 

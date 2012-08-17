@@ -1,7 +1,7 @@
 // Parametric Involute Bevel and Spur Gears by GregFrost
-// It is licensed under the Creative Commons - GNU LGPL 2.1 license.
+// It is licensed under the Creative Commons - GNU GPL license.
 // © 2010 by GregFrost
-// http://www.thingiverse.com/thing:3575 and http://www.thingiverse.com/thing:3752
+// http://www.thingiverse.com/thing:3575
 
 // Simple Test:
 //gear (circular_pitch=700,
@@ -14,15 +14,13 @@
 //test_gears ();
 
 // Meshing Double Helix:
-//test_meshing_double_helix ();
+//meshing_double_helix ();
 
 // Demonstrate the backlash option for Spur gears.
 //test_backlash ();
 
 // Demonstrate how to make meshing bevel gears.
-//test_bevel_gear_pair();
-
-//test_bevel_gear();
+bevel_gear_pair ();
 
 pi=3.1415926535897932384626433832795;
 
@@ -297,8 +295,7 @@ module gear (
 	circles=0,
 	backlash=0,
 	twist=0,
-	involute_facets=0,
-	flat=false)
+	involute_facets=0)
 {
 	if (circular_pitch==false && diametral_pitch==false) 
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
@@ -350,7 +347,7 @@ module gear (
 		{
 			difference ()
 			{
-				linear_extrude_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
+				linear_extrude (height=rim_thickness, convexity=10, twist=twist)
 				gear_shape (
 					number_of_teeth,
 					pitch_radius = pitch_radius,
@@ -365,38 +362,23 @@ module gear (
 					cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
 			}
 			if (gear_thickness > rim_thickness)
-				linear_extrude_flat_option(flat=flat, height=gear_thickness)
-				circle (r=rim_radius);
-			if (flat == false && hub_thickness > gear_thickness)
+				cylinder (r=rim_radius,h=gear_thickness);
+			if (hub_thickness > gear_thickness)
 				translate ([0,0,gear_thickness])
-				linear_extrude_flat_option(flat=flat, height=hub_thickness-gear_thickness)
-				circle (r=hub_diameter/2);
+				cylinder (r=hub_diameter/2,h=hub_thickness-gear_thickness);
 		}
 		translate ([0,0,-1])
-		linear_extrude_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
-		circle (r=bore_diameter/2);
+		cylinder (
+			r=bore_diameter/2,
+			h=2+max(rim_thickness,hub_thickness,gear_thickness));
 		if (circles>0)
 		{
 			for(i=[0:circles-1])	
 				rotate([0,0,i*360/circles])
 				translate([circle_orbit_diameter/2,0,-1])
-				linear_extrude_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
-				circle(r=circle_diameter/2);
+				cylinder(r=circle_diameter/2,h=max(gear_thickness,rim_thickness)+3);
 		}
 	}
-}
-
-module linear_extrude_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
-{
-	if(flat==false)
-	{
-		linear_extrude(height = height, center = center, convexity = convexity, twist= twist) child(0);
-	}
-	else
-	{
-		child(0);
-	}
-
 }
 
 module gear_shape (
@@ -499,7 +481,7 @@ function rotate_point (rotate, coord) =
 function involute (base_radius, involute_angle) = 
 [
 	base_radius*(cos (involute_angle) + involute_angle*pi/180*sin (involute_angle)),
-	base_radius*(sin (involute_angle) - involute_angle*pi/180*cos (involute_angle))
+	base_radius*(sin (involute_angle) - involute_angle*pi/180*cos (involute_angle)),
 ];
 
 
@@ -597,18 +579,6 @@ module test_gears()
 			rim_width=5,
 			rim_thickness=10);
 	}
-}
-
-module test_meshing_double_helix(){
-    meshing_double_helix ();
-}
-
-module test_bevel_gear_pair(){
-	bevel_gear_pair ();
-}
-
-module test_bevel_gear(){
-	bevel_gear();
 }
 
 module meshing_double_helix ()

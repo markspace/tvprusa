@@ -1,5 +1,7 @@
 *.gcode
 !*.stl
+*.stl
+
 source/info.png
 
 thingdoc

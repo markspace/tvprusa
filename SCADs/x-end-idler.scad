@@ -10,6 +10,12 @@
 include <configuration.scad>
 corection = 1.17; 
 
+z_rod_leadscrew_spacing=31.5;
+z_alignment_fix=z_rod_leadscrew_spacing-29.5;
+
+x_belt_center_offset=39.5;
+x_belt_alignment_fix = 32.9 - (x_belt_center_offset - bearing_thickness - 1.5);
+
 /**
  * @id x-end-idler
  * @name X end idler
@@ -23,29 +29,35 @@ corection = 1.17;
 use <x-end.scad>
 use <teardrop.scad>
 
+support_beam_offset=(linear==true) ? 6:0;
+
 wall_thickness=5;
 
-xendidler(closed_end=false,curved_sides=true,luu_version=false);
+xendidler(closed_end=false,curved_sides=true, curved_corners=true, linear_bearing=linear);
 
-module xendidler(closed_end=true,curved_sides=true,luu_version=false)
+module xendidler(closed_end=true,curved_sides=true, curved_corners=false, linear_bearing=false)
 {
 	difference()
 	{
 		union()
 		{
-			xend(closed_end=closed_end,curved_sides=curved_sides,luu_version=luu_version);
+			xend(closed_end=closed_end,curved_sides=curved_sides, curved_corners=curved_corners, linear_bearing=linear_bearing);
 //			import_stl("x-end.stl");
 
-			translate([-25-15.8/2+24.8/2,-21.5,25.3+12.5]) 
-			cube([24.8,7,4.4],center=true);
+			translate([-25-15.8/2+26.5/2+x_belt_alignment_fix/2,-21,25.3+12.5]) 
+			difference()
+			{
+				cube([26.5-x_belt_alignment_fix,8,4.4], center=true);
+				translate([26.5/2+4.8/2-x_belt_alignment_fix/2,0,0]) cylinder(r=4.8, h=5, $fn=6, center=true);
+			}
 
-			translate([-25-15.8/2+24/2,12.5,25.3+12.5]) 
-			cube([24,5,4.4],center=true);
+			translate([-25-15.8/2+24/2+x_belt_alignment_fix/2,12.5+z_alignment_fix-support_beam_offset,25.3+12.5]) 
+			cube([24-x_belt_alignment_fix,5,4.4],center=true);
 
 			difference ()
 			{
-				translate([-25-15.8/2+wall_thickness/2,-5,15.8/2+(40-15.8/2)/2]) 
-				cube([wall_thickness,40,40-15.8+15.8/2],center=true);
+				translate([-25-15.8/2+wall_thickness/2+x_belt_alignment_fix,-5+z_alignment_fix/2-support_beam_offset/2,15.8/2+(40-15.8/2)/2]) 
+				cube([wall_thickness,40+z_alignment_fix-support_beam_offset,40-15.8+15.8/2],center=true);
 
 				translate([-25,-26,15.8/2])
 				rotate(90) 
@@ -53,27 +65,13 @@ module xendidler(closed_end=true,curved_sides=true,luu_version=false)
 			}
 		}
 
-		translate([-25-15.8/2+wall_thickness/2, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
+		translate([-25-15.8/2+wall_thickness/2+x_belt_alignment_fix, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
 		cylinder(h=wall_thickness+2,r=m8_diameter/2,$fn=9,center=true);
 
-		xendcorners(5,5,5,5,0);
-
-//		if (!closed_end)
-//		for (i=[-1,1])
-//		translate([15*i,10,15.8/2+0.75]) 
-//		{
-//			rotate([90,0,0])
-//			rotate([0,0,180/6])
-//			cylinder(r=m3_diameter/2-0.2,h=20,center=true,$fn=6);
-//
-//			rotate([90,0,0])
-//			rotate([0,0,180/6])
-//			cylinder(r=(m3_nut_diameter-0.5)/2,h=3,center=true,$fn=6);
-//
-//			color([1,0,0])
-//			translate([0,0,(10+1)/2])
-//			cube([(m3_nut_diameter-0.5)*cos(30),3,10+1],center=true);
-//		}
+		if(curved_corners==true) 
+		{
+			xendcorners(5,5,5,5,0);
+		}
 	}
 }
 
