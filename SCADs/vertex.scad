@@ -31,20 +31,7 @@ include <configuration.scad>
 
 basefoot = false;
 
-difference()
-{
-	vertex( with_foot = basefoot );
-	rotate( [0, 0, 120] )
-	{
-		translate( [-2.5, -55, 12.5] )
-		{
-			scale( [0.75, 0.75, 1] )
-			{
-				linear_extrude( file = "TVRR.dxf",  height = 5 );
-			}
-		}
-	}
-}
+vertex( with_foot = basefoot );
 
 
 //import_stl( "frame-vertex.stl" );
