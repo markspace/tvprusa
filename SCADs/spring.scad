@@ -216,7 +216,7 @@ lx=20;
 ly=27;
 lz=15;
 folds=3;
-th=2.5;
+th=2.25;
 drill=m3_diameter;
 fid=(ly-(folds+1)*th)/folds;
 
