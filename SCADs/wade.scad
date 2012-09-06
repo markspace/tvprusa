@@ -161,13 +161,13 @@ idler_height=12;
 idler_608_diameter=608_diameter+2;
 idler_608_height=9;
 idler_mounting_hole_across=8;
-idler_mounting_hole_up=15;
+idler_mounting_hole_up=14;
 idler_short_side=wade_block_depth-2;
 idler_hinge_r=m3_diameter/2+3.5;
 idler_hinge_width=6.5;
 idler_end_length=(idler_height-2)+5;
 idler_mounting_hole_diameter=m3_diameter+0.25;
-idler_mounting_hole_elongation=1;
+idler_mounting_hole_elongation=3;
 idler_long_top=idler_mounting_hole_up+idler_mounting_hole_diameter/2+idler_mounting_hole_elongation+2.5+20;
 idler_long_bottom=idler_fulcrum_offset;
 idler_long_side=idler_long_top+idler_long_bottom;
@@ -701,7 +701,7 @@ module grrf_peek_mount_holes()
 module j_head_holes () 
 {
 	extruder_recess_d=17;
-	extruder_recess_h=16; 
+	extruder_recess_h=6; 
 	hole_axis_rotation=42.5; 
 	hole_separation=30;
 	hole_slot_height=5;
@@ -709,22 +709,5 @@ module j_head_holes ()
 	// Recess in base
 	translate([0,0,-1])
 	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
-	
-	for(mount=[-1,1])
-	rotate([0,0,hole_axis_rotation+90+90*mount])
-	translate([hole_separation/2,0,0])
-	{
-		translate([0,0,-1])
-		cylinder(r=m3_diameter/2,h=base_thickness+2,$fn=8);
 
-		translate([0,0,base_thickness/2])
-		rotate(-hole_axis_rotation+180)
-		{
-//			rotate(30)
-			cylinder(r=m3_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
-			translate([0,-m3_nut_diameter,hole_slot_height/2+base_thickness/2]) 
-			cube([m3_nut_diameter,m3_nut_diameter*2,hole_slot_height],
-					center=true);
-		}
-	}
 }
