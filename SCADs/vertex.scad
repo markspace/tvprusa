@@ -33,6 +33,23 @@ basefoot = false;
 
 vertex( with_foot = basefoot );
 
+// Commented out TVRRUG logo
+
+//difference()
+//{
+//	vertex( with_foot = basefoot );
+//	rotate( [0, 0, 120] )
+//	{
+//		translate( [-2.5, -55, 12.5] )
+//		{
+//			scale( [0.75, 0.75, 1] )
+//			{
+//				linear_extrude( file = "TVRR.dxf",  height = 5 );
+//			}
+//		}
+//	}
+//}
+
 
 //import_stl( "frame-vertex.stl" );
 
@@ -136,7 +153,11 @@ module vertex( with_foot = true )
 		translate( [hole_separation - vertex_end_major_d / 2 - 1,
 			vertex_horizontal_hole_offset - 2 * block * vertex_horizontal_hole_offset,
 			vfvertex_height / 2] )
-		teardrop( r = m8_diameter / 2, h = vertex_end_major_d + 2 );
+		rotate ([0,90,0]) cylinder ( r = (m8_diameter - 0.1) / 2, h = vertex_end_major_d + 2 );
+
+//	commented out teardrop
+
+//		teardrop( r = m8_diameter / 2, h = vertex_end_major_d + 2 );
 	}
 }
 
