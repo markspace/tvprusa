@@ -44,15 +44,15 @@ module xendidler(closed_end=true,curved_sides=true, curved_corners=false, linear
 			xend(closed_end=closed_end,curved_sides=curved_sides, curved_corners=curved_corners, linear_bearing=linear_bearing);
 //			import_stl("x-end.stl");
 
-			translate([-25-15.8/2+26.5/2+x_belt_alignment_fix/2,-21,25.3+12.5]) 
+			translate([-25-15.8/2+26.5/2+x_belt_alignment_fix/2,-21,25.3+7.7]) 
 			difference()
 			{
-				cube([26.5-x_belt_alignment_fix,8,4.4], center=true);
-				translate([26.5/2+4.8/2-x_belt_alignment_fix/2,0,0]) cylinder(r=4.8, h=5, $fn=6, center=true);
+				cube([26.5-x_belt_alignment_fix,8,14], center=true);
+				translate([26.5/2+4.8/2-x_belt_alignment_fix/2,0.75,0]) cylinder(r=6, h=15, $fn=6, center=true);
 			}
 
-			translate([-25-15.8/2+24/2+x_belt_alignment_fix/2,12.5+z_alignment_fix-support_beam_offset,25.3+12.5]) 
-			cube([24-x_belt_alignment_fix,5,4.4],center=true);
+			translate([-25-15.8/2+24/2+x_belt_alignment_fix/2,12.5+z_alignment_fix-support_beam_offset,25.3+7.7]) 
+			cube([24-x_belt_alignment_fix,5,14],center=true);
 
 			difference ()
 			{
@@ -65,8 +65,8 @@ module xendidler(closed_end=true,curved_sides=true, curved_corners=false, linear
 			}
 		}
 
-		translate([-25-15.8/2+wall_thickness/2+x_belt_alignment_fix, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
-		cylinder(h=wall_thickness+2,r=m8_diameter/2,$fn=9,center=true);
+		translate([-25-15.8/2+(wall_thickness+2+20)/2+x_belt_alignment_fix, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
+	#	cylinder(h=wall_thickness+2+40-x_belt_alignment_fix,r=m8_diameter/2,$fn=9,center=true);
 
 		if(curved_corners==true) 
 		{

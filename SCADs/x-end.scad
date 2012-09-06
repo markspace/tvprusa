@@ -17,20 +17,20 @@ z_rod_leadscrew_spacing=31.5;
 alignment_fix=z_rod_leadscrew_spacing-29.5;
 
 axis_diameter_real=4;
-axis_diameter_larger=4.35;
+axis_diameter_larger=4.2;
 pressure_pad_height=2.5;
-add_strength=1;
+add_strength=false;
 xend_height=15.8;
 xend_length=40+alignment_fix;
 solid_end_width=3;
 slot_width=1;
 
-pad_height=6.5;
+pad_height=4.9;
 pad_width=7;
 pad_connector_height=3.3;
 bushing_support_width=17;
 rod_support_width=10;
-pad_groove_depth=0.7;
+pad_groove_depth=0.8;
 
 m8cornerdiameter = nutcornerdiameter(m8_nut_diameter);
 
@@ -82,7 +82,7 @@ module xend_side(closed_end=true, curved_sides=false, add_strength=false)
 			union ()
 			{
 				// Teardrop cutout				
-				translate([0,-1,0]) rotate(90) teardropcentering(axis_diameter_larger, closed_end?xend_length-solid_end_width+1:xend_length+2);
+				translate([0,-1,0]) rotate(90) teardrop45(axis_diameter_larger, closed_end?xend_length-solid_end_width+1:xend_length+2);
 
 				// Main holes thru the bottom
 				translate([axis_diameter_larger,0,0]) rotate([0,8,0]) translate([-axis_diameter_larger,solid_end_width,-xend_height/2-1]) cube([axis_diameter_larger, xend_length-2*solid_end_width, xend_height/2+1]);
@@ -134,7 +134,7 @@ module xend_side(closed_end=true, curved_sides=false, add_strength=false)
 		if (!closed_end)
 		{
 			translate([0,xend_length-1.5-solid_end_width,0])
-			cylinder(r=3/2, h=xend_height+2,$fn=10,center=true);
+			cylinder(r=m3_diameter/2, h=xend_height+2,$fn=10,center=true);
 		}
 	}
 }
@@ -159,6 +159,10 @@ module xend(closed_end=true, curved_sides=false, curved_corners=false, linear_be
 //			translate([0,6.5,30]) 
 //			cube([15.5+2*thin_wall,17,60],center=true);
 
+			// Strengthening beam between nut trap and bushing
+			translate([0,-6+alignment_fix/2,31]) 
+			cube([4,12+alignment_fix,18],center=true);
+
 			//Nut Trap
 			translate([0,-20,0]) 
 			cylinder(h=40,r=m8cornerdiameter/2+thin_wall,$fn=6);
@@ -168,8 +172,8 @@ module xend(closed_end=true, curved_sides=false, curved_corners=false, linear_be
 		if(curved_corners==true) xendcorners(5,5,5,5,0);
 
 		// Slider cutout. 
-		translate([0,10+alignment_fix,32.5]) 
-		cube([22.5,22.5,70],center=true);
+		translate([0,10+alignment_fix,8]) 
+		cube([22.5,22.5,20],center=true);
 
 		//Rod hole.
 		difference()
