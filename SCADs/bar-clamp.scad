@@ -26,10 +26,16 @@ $fn = 62;
 
 // for 0.20mm layer, 0.35mm nozzle 00 this ensures "solid walls"
 
-extrusionSize = 0.44;	// for 0.20mm layer
-shell = 6 * extrusionSize;
-m8rod = 7.80 / 2;
-m8smooth = 8.0 / 2;
+//extrusionSize = 0.44;	// for 0.20mm layer
+//shell = 6 * extrusionSize;
+//m8rod = 7.80 / 2;
+//m8smooth = 8.0 / 2;
+
+// For 0.3 layer 0.4mm nozzle with slic3r hole width fix
+extrusionSize = 0.42;	// for 0.30mm layer
+shell = 6 * extrusionSize + extrusionSize/2;
+m8rod = 7.80 / 2 + extrusionSize/2;
+m8smooth = 8.0 / 2 + extrusionSize/2;
 
 smoothwidth = (m8smooth + shell) * 2;
 rodW = (m8rod + shell) * 2;
