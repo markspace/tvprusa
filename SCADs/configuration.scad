@@ -53,16 +53,16 @@ belt_pitch = 5;
 
 // Nuts and bolts
 
-// m8_diameter = 0;
-// m8_nut_diameter = 0;
-// m8_nut_thickness = 0;
+m8_diameter = 8.4;
+m8_nut_diameter = 15.4;
+m8_nut_thickness = 6.3;;
 
 // m4_diameter = 0;
  m4_nut_diameter = 8.5;
 // m4_nut_thickness = 0;
 
-// m3_diameter = 0;
-// m3_nut_diameter = 0;
+m3_diameter = 3.6;
+m3_nut_diameter = 7;
 m3_nut_thickness = 3;
 
 // Bushing holder
