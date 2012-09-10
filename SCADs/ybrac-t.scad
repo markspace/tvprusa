@@ -8,7 +8,8 @@ E = 0.01;
 bar_width = 18;
 bar_thickness = 5;
 bushing_diameter = 18;
-m8_diameter = 8;
+//m8_diameter = 8;
+m8_diameter = 7.8 + 0.42;
 
 double_bearings_and_washer = 17.1;
 
@@ -36,11 +37,13 @@ use_m3_nut_for_tension = 1;
 motor_inter_screw = 31.5;
 
 brass_insert_diameter = 4;
-m3_diameter = 3;
+//m3_diameter = 3;
+m3_diameter = 3 + 0.42;
 m3_nut_diameter = 5.7;
 m3_nut_height = 2.5;
 m3_bolt_head_thickness = 4; // with washer
-m3_washer_diameter = 7;
+//m3_washer_diameter = 7;
+m3_washer_diameter = 7 + 0.42;
 
 smallbar_width = bar_width - 6;
 angle1 = 180 + 10;
@@ -48,7 +51,7 @@ angle2 = 102.3;
 length_top_bar = 43;
 length_bot_bar = 44;
 support_column_diameter = 5.5*2;
-bridged_holes_layer = 0.25;
+bridged_holes_layer = 0.3;
 motor_pulley_hole_diameter = 22.4;
 
 top_bar_origin = [3, 0, 0];

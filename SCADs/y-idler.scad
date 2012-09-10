@@ -11,7 +11,8 @@ bushing_diameter = 18;
 
 bearing_and_belt_diameter = 28;
 
-m8_diameter = 8;
+//m8_diameter = 8;
+m8_diameter = 7.8 + 0.42;
 
 double_bearings_and_washer = 17.1;
 
@@ -29,11 +30,11 @@ bottom_bar_length = bar_x_offset / cos(bottom_angle);
 echo("bottom angle", bottom_angle, bottom_bar_length);
 
 spikey_first_layer_support = 1;
-use_brass_insert_for_tension = 1;
+use_brass_insert_for_tension = 0;
 use_m3_nut_for_tension = 1;
 
 brass_insert_diameter = 4;
-m3_diameter = 3;
+m3_diameter = 3.0 + 0.42;
 m3_nut_diameter = 5.55;
 m3_nut_height = 2.5;
 demo = 0;
