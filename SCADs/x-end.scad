@@ -182,7 +182,7 @@ module xend(closed_end=true, curved_sides=false, curved_corners=false, linear_be
 			translate([0,-20,8.5]) cylinder(h=4,r=m8_nut_diameter/2+thin_wall,$fn=6,center=true);
 		}
 		translate([0,-20,52-45]) 
-		polyhole(m8_diameter,90);
+		polyhole(m8_diameter+2,90);
 	}
 }
 
