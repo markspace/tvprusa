@@ -17,7 +17,7 @@ z_rod_leadscrew_spacing=31.5;
 alignment_fix=z_rod_leadscrew_spacing-29.5;
 
 axis_diameter_real=4;
-axis_diameter_larger=4.2;
+axis_diameter_larger=4.25;
 pressure_pad_height=2.5;
 add_strength=false;
 xend_height=15.8;
@@ -182,7 +182,7 @@ module xend(closed_end=true, curved_sides=false, curved_corners=false, linear_be
 			translate([0,-20,8.5]) cylinder(h=4,r=m8_nut_diameter/2+thin_wall,$fn=6,center=true);
 		}
 		translate([0,-20,52-45]) 
-		polyhole(m8_diameter,90);
+		polyhole(m8_diameter+2,90);
 	}
 }
 
@@ -198,14 +198,4 @@ module xendcorners(dia1, dia2, dia3, dia4, height=0)
 		translate(v = [-33.1, -19.9+alignment_fix, -25]) rotate(a=[0,0,-90]) roundcorner(dia4);
 	}
 }
-//xendcorners(5,5,5,5,0);
-//difference(){
 xend(closed_end=true, curved_sides=false, linear_bearing=true, curved_corners=false);
-//translate(v = [15, -40, 0]) cube(size = [20,100,20]);
-
-//translate(v = [-15-20, -40, 0]) cube(size = [20,100,20]);
-
-//translate(v = [-50, -45, 0]) cube(size = [100,40,100]);
-//}
-
-//xend_side();
