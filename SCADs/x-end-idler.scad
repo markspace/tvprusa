@@ -68,6 +68,14 @@ module xendidler(closed_end=true,curved_sides=true, curved_corners=false, linear
 		translate([-25-15.8/2+(wall_thickness+2+20)/2+x_belt_alignment_fix, -6, 28-3-4.7+12.5]) rotate([0,90,0]) 
 	#	cylinder(h=wall_thickness+2+40-x_belt_alignment_fix,r=m8_diameter/2,$fn=9,center=true);
 
+		if(closed_end==false)
+		{
+			for(x=[-1,1])
+			{
+				translate([x*25,12.5,15.8]) nut(d=m3_nut_diameter+1, h=10.2, horizontal=false);
+			}
+		}
+
 		if(curved_corners==true) 
 		{
 			xendcorners(5,5,5,5,0);
