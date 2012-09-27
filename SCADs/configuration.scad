@@ -62,7 +62,8 @@ m8_nut_thickness = 6.3;;
 // m4_nut_thickness = 0;
 
 m3_diameter = 3.6;
-m3_nut_diameter = 7;
+//m3_nut_diameter = 7 should be flats measurement;
+m3_nut_diameter = 6.1;
 m3_nut_thickness = 3;
 
 // Bushing holder
