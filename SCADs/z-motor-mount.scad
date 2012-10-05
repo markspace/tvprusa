@@ -38,12 +38,12 @@ module zmotormount()
 		}
 		translate(v=[-2.1+alignment_fix,0,2.8]) cube(size = [46,43,13], center = true);
 
-/*		// reducing the material
+		// reducing the material
 		translate(v=[10.5-2.5+alignment_fix,34.5,-4]) cube(size = [25,20,30], center = true);
 		translate(v=[10.5-2.5+alignment_fix,-34.5,-4]) cube(size = [25,20,30], center = true);
 		translate(v=[-10+alignment_fix,0,0]) translate(v=[5.5,24.5,-10]) rotate(a=[0,0,45]) cube(size = [20,20,30]);
 		translate(v=[-10+alignment_fix,0,0]) translate(v=[5.5,-24.5,-10]) rotate(a=[0,0,225]) cube(size = [20,20,30]);
-*/
+
 		// Nema 17
 		rotate ([0,0,45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
 		rotate ([0,0,-45]) translate([20,0,0]) cube(size = [9,3.2,25], center = true);
