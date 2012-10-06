@@ -99,7 +99,8 @@ module gregs_x_carriage(with_fanmount=true)
 		for (hole=[-1:1])
 		rotate(hole*22)
 		translate([0,25,-1])
-		cylinder(r=m4_diameter/2,h=lm8uu_support_thickness*2+2,$fs=1);
+        polyhole(d=m4_diameter,h=lm8uu_support_thickness*2+2);
+
 	
 		translate([0,0,-1])
 		cylinder(r=21,h=lm8uu_support_thickness*2+2);
@@ -191,7 +192,7 @@ module belt_clamp_channel()
 		for(i=[-1,1])
 		translate([i*belt_clamp_hole_separation/2,0,-1])
 		rotate(360/16)
-		cylinder(r=m3_diameter/2,h=belt_clamp_channel_height+2,$fn=8);
+		polyhole(d=m3_diameter,h=belt_clamp_channel_height+2);
 
 		translate([-belt_width/2,-belt_clamp_width/2-1,
 			belt_clamp_channel_height-belt_thickness-tooth_height])
@@ -201,19 +202,22 @@ module belt_clamp_channel()
 
 module belt_clamp_holes()
 {
+	//translate([0,0,belt_clamp_height/2])
 	translate([0,0,belt_clamp_height/2])
 	{
 		for(i=[-1,1])
-		translate([i*belt_clamp_hole_separation/2,0,0])
-		cylinder(r=m3_diameter/2,h=belt_clamp_height+2,center=true,$fn=8);
+		translate([i*belt_clamp_hole_separation/2, 0, -belt_clamp_height/2 - 1])
+		polyhole(d=m3_diameter,h=belt_clamp_height+2);
 	
 		rotate([90,0,0])
 		rotate(360/16)
-		cylinder(r=m3_diameter/2-0.3 /*tight*/ ,h=belt_clamp_width+2,center=true,$fn=8);
+        translate([0,0,-belt_clamp_width/2-1])
+		polyhole(d=m3_diameter - 0.3 /*tight*/,h=belt_clamp_width+2);
 
 		rotate([90,0,0]) 
-		translate([0,0,belt_clamp_width/2])
-		cylinder(r=m3_nut_diameter/2-0.3 /*tight*/ ,h=3.4,center=true,$fn=6);
+		translate([0,0,belt_clamp_width/2-1.7])
+        nut(d=m3_nut_diameter - 0.3 /*tight*/ ,h=3.4,horizontal=false);
+
 	}
 }
 
@@ -237,7 +241,7 @@ module belt_clamp()
 		for(i=[-1,1])
 		translate([i*belt_clamp_hole_separation/2,0,-1])
 		rotate(360/16)
-		cylinder(r=m3_diameter/2,h=belt_clamp_clamp_height+2,$fn=8);
+		polyhole(d=m3_diameter,h=belt_clamp_clamp_height+2);
 
 		for(i=[-1:1])
 		translate([-belt_width/2,-tooth_spacing/4+i*tooth_spacing,
@@ -303,16 +307,15 @@ module fan_mount()
 			{
 				rotate([90,0,0])
 				rotate(180/8)
-				cylinder(r=m3_diameter/2,h=fan_support_thickness+2,
-					center=true,$fn=8);
+                translate([0,0,-fan_support_thickness/2-1])
+				polyhole(d=m3_diameter,h=fan_support_thickness+2);
 				translate([0,0,0])
 				rotate([90,0,0])
 				rotate([0,0,180/6])
-				cylinder(r=(m3_nut_diameter-0.5)/2,h=fan_trap_width,
-					center=true,$fn=6);
-				color([1,0,0])
+                translate([0,0,-fan_trap_width/2])
+				nut(d=m3_nut_diameter,h=fan_trap_width, horizontal=false);
 				translate([0,0,-(fan_hole_height+1)/2])
-				cube([(m3_nut_diameter-0.5)*cos(30),fan_trap_width,
+				cube([m3_nut_diameter,fan_trap_width,
 					fan_hole_height+1],center=true);
 			}
 		}
