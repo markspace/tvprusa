@@ -31,7 +31,7 @@ ScrewOnSide = 1;
 NutR = 12.9 / 2;
 NutH = 6.40;
 RodR = (7.6 / 2);
-SRodR = 8 / 2;
+SRodR = 8.4 / 2;
 WallW = 4.1;
 E = 0.01;
 
@@ -40,9 +40,9 @@ GuideW = (SRodR * 2) + (WallW * 1.5);
 
 ScrewL = 10;
 ScrewW = (RodR * 2) + (WallW * 1.8);
-ScrewNutR = 5.5 / 2;
+ScrewNutR = 6.1 / 2;
 ScrewNutH = 2;
-ScrewThreadR = 3 / 2;
+ScrewThreadR = 3.6 / 2;
 ScrewWasheR = 7.3 / 2;
 ScrewNutInset = WallW / 3;
 ScrewWasherInset = 2;
@@ -68,7 +68,7 @@ module zizolator() {
 				cube([ScrewL, ScrewW, NutH + WallW]);		
 		}
 		translate([0,0,-E]) {
-			nut(d = (NutR) * 2, h = NutH + (WallW/2), horizontal=false);
+			nut(d = (NutR) * 2, h = NutH + (WallW/2), horizontal=true);
 			cylinder(r = SRodR + 0.3, h = NutH + (2*WallW));
 		
 			rotate([0,0,-90 * ScrewOnSide])
@@ -88,7 +88,7 @@ module zizolator() {
 					cylinder(h = (NutR * 3), r = ScrewThreadR, $fn = 10);
 			translate([0,ScrewNutInset+(ScrewW/2)+E,0])
 				rotate([90,30,0])
-					nut(h = ScrewNutInset*2, d = ScrewNutR*2);
+					nut(h = ScrewNutInset*2, d = ScrewNutR*2, horizontal=false);
 			translate([0,-(ScrewW/2)+ScrewWasherInset-E,0])
 				rotate([90,00,0])
 					cylinder(h = ScrewWasherInset*2, r = ScrewWasheR, $fn = 16);
