@@ -31,7 +31,7 @@ ScrewOnSide = 1;
 NutR = 12.9 / 2;
 NutH = 6.40;
 RodR = (7.6 / 2);
-SRodR = 8.4 / 2;
+SRodR = 8.0 / 2;
 WallW = 4.1;
 E = 0.01;
 
