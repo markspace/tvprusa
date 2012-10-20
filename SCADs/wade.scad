@@ -339,7 +339,8 @@ module block_holes()
 
 	// Idler fulcrum hole.
 	translate(idler_fulcrum+[0,0,0.4])
-	cylinder(r=m3_diameter/2,h=idler_short_side-2*idler_hinge_width-0.5,center=true,$fn=16);
+    translate([0,0,-(idler_short_side-2*idler_hinge_width-0.5)/2])
+	polyhole(d=m3_diameter,h=idler_short_side-2*idler_hinge_width-0.5);
 
 	translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 	cylinder(r=m3_nut_diameter/2+0.25,h=1,$fn=40);
@@ -417,12 +418,12 @@ module block_holes()
 			rotate([0,0,30])
 			{
 				translate([0,0,-1])
-				cylinder(r=m3_diameter/2,h=wade_block_depth+6,$fn=6);	
+				polyhole(d=m3_diameter,h=wade_block_depth+6);	
 				translate([0,0,wade_block_width-idler_nut_trap_depth])
-				cylinder(r=m3_nut_diameter/2,h=idler_nut_thickness,$fn=6);	
+				nut(d=m3_nut_diameter,h=idler_nut_thickness,horizontal=false);	
 			}
 			translate([0,10/2,wade_block_width-idler_nut_trap_depth+idler_nut_thickness/2])
-			cube([m3_nut_diameter*cos(30),10,idler_nut_thickness],center=true);
+			cube([m3_nut_diameter,10,idler_nut_thickness],center=true);
 		}
 	}
 }
@@ -531,12 +532,13 @@ module wadeidler()
 		//Fulcrum hole.
 		translate(idler_fulcrum)
 		rotate(360/12)
-		cylinder(h=idler_short_side+2,r=m3_diameter/2-0.1,center=true,$fn=8);
+        translate([0,0,-idler_short_side/2-1])
+		polyhole(h=idler_short_side+2,d=m3_diameter);
 
 		//Nut trap for fulcrum screw.
 		translate(idler_fulcrum+[0,0,idler_short_side/2-idler_hinge_width-1])
 		rotate(360/16)
-		cylinder(h=3,r=m3_nut_diameter/2,$fn=6);
+		nut(h=3,d=m3_nut_diameter, horizontal=false);
 
 		for(idler_screw_hole=[-1,1])
 		translate(idler_axis+[2-idler_height,0,0])
