@@ -8,7 +8,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/prusajr/PrusaMendel
 include <configuration.scad>
-use <NEMA17.scad>
+
 
 /**
  * @id z-motor-mount
@@ -33,10 +33,10 @@ translate(v=[-25.5,-29.25,0]) rotate(a=[0,90,0]) cylinder(h = 55, r=8, $fn=30);
 translate(v=[-5,0,4.3]) cube(size = [43+10,43,16], center = true);
 
 // reducing the material
-//translate(v=[10.5-2.5,34.5,-4]) cube(size = [25,20,30], center = true);
-//translate(v=[10.5-2.5,-34.5,-4]) cube(size = [25,20,30], center = true);
-//translate(v=[-10,0,0]) translate(v=[5.5,24.5,-10]) rotate(a=[0,0,45]) cube(size = [20,20,30]);
-//translate(v=[-10,0,0]) translate(v=[5.5,-24.5,-10]) rotate(a=[0,0,225]) cube(size = [20,20,30]);
+translate(v=[10.5-2.5,34.5,-4]) cube(size = [25,20,30], center = true);
+translate(v=[10.5-2.5,-34.5,-4]) cube(size = [25,20,30], center = true);
+translate(v=[-10,0,0]) translate(v=[5.5,24.5,-10]) rotate(a=[0,0,45]) cube(size = [20,20,30]);
+translate(v=[-10,0,0]) translate(v=[5.5,-24.5,-10]) rotate(a=[0,0,225]) cube(size = [20,20,30]);
 
 //// Nema 17
 rotate ([0,0,0]) translate([31/2-1,31/2,0]) cube(size = [7,3.2,25], center = true);
@@ -62,12 +62,6 @@ translate(v=[0,-7,0]) rotate(a=[0,90,0]) rotate(a=[0,0,30]) nut(m3_nut_diameter-
 
 translate ([0,0,-0.1]) %cube ([190,190,0.1], center = true);
 
-//for (i = [0:3])
-//{
-//translate(v=[i*25-25-12.5,0,29.45]) rotate ([0,90,0]) zmotormount();
-//}
 
-//echo (m3_nut_diameter);
-//echo (m8_diameter);
 translate(v=[0,0,29.45]) rotate ([0,90,0]) zmotormount();
-//translate(v=[0,0,32.5]) rotate ([0,90,0]) nema17();
+

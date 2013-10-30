@@ -1,14 +1,15 @@
-Prusa Mendel
+TVRRUG Prusa Mendel Round 1
 
-Please read http://reprap.org/wiki/Prusa_Mendel before attempting to build this. There is also PDF (manual-wiki) with backup documentation from reprap.org.  
+These are the files for the TVRRUG Round 1 version of the Prusa Mendel
+
+Please read http://tvrrug.org.uk/tvprusa before attempting to build this.
 
 Imported stuff:
 Frame vertices are based on Viks and Tonokips ones
 Extruder by Wade
 Parametric Involute Bevel and Spur Gears by GregFrost
 Belt pulley is http://www.thingiverse.com/thing:3104 by GilesBathgate
-
-Prusa Mendel part list:
+Most of the rest from Josef Prusa
 
 To print:
 
@@ -24,7 +25,7 @@ To print:
 2x rod-clamp
 1x y-motor-bracket
 2x pulley
-
-12x pla-bushing 
-
-The Mendel build plate contains all the parts except the pla bushings
+1x herringbone-wadebits
+4x SpringSeat
+1x wade
+1x bed-spring_4off (in STLs dir)

@@ -1,40 +1,27 @@
-target metric: OPENSCAD:=$(shell which openscad) -D variant=0 -D linear=0
-target metric: TARGET=./metric-prusa
-target metric-lm8uu: TARGET=./metric-prusa-linear
-target metric-lm8uu: OPENSCAD:=$(shell which openscad) -D variant=0 -D linear=1
-target sae: TARGET=./sae-prusa
-target sae: OPENSCAD:=$(shell which openscad) -D variant=1 -D linear=0
-target sae-lm8uu: TARGET=./sae-prusa-linear
-target sae-lm8uu: OPENSCAD:=$(shell which openscad) -D variant=1 -D linear=1
+OPENSCAD:=$(shell which openscad) -D variant=0 -D linear=1
+TARGET=tvrrug1.0
 
-PARTS= $(TARGET)/x-end-motor.stl $(TARGET)/x-end-idler.stl $(TARGET)/bar-clamp.stl
+#PARTS= $(TARGET)/x-end-motor.stl $(TARGET)/x-end-idler.stl $(TARGET)/bar-clamp.stl
+PARTS= $(TARGET)/frame-vertex-with-foot.stl $(TARGET)/frame-vertex-without-foot.stl $(TARGET)/bar-clamp.stl $(TARGET)/belt-clamp.stl $(TARGET)/bushing.stl $(TARGET)/coupling.stl $(TARGET)/endstop-holder.stl $(TARGET)/herringbone-wadebits.stl $(TARGET)/pulley.stl $(TARGET)/rod-clamp.stl $(TARGET)/SpringSeat.stl $(TARGET)/wade.stl $(TARGET)/x-carriage.stl $(TARGET)/x-end-idler.stl $(TARGET)/x-end-motor.stl $(TARGET)/y-motor-bracket.stl $(TARGET)/z-motor-mount.stl $(TARGET)/bed-spring_4off.stl
 
 TARGETS=$(PARTS)
+parts : $(TARGET) $(TARGETS)
 help: 
 	@echo Options:
-	@echo make metric: makes metric parts
-	@echo make metric-lm8uu: makes metric parts
-	@echo make sae: makes metric parts
-	@echo make sae-lm8uu: makes metric parts
 	@echo make clean: deletes the stl directory with the output files
-	@echo adding VARIANT=1 to any of these commands generates SAE parts
-	@echo SAE parts get saved in ./stl-sae, metric parts in ./stl
-metric : parts
-metric-lm8uu : parts
-sae : parts
-sae-lm8uu : parts
-parts : $(TARGET) $(TARGETS)
 $(TARGET) :
 	mkdir -p $(TARGET)
-$(TARGET)/%.stl : source/%.scad
+$(TARGET)/bar-clamp.stl: SCADs/bar-clamp.scad
+	$(OPENSCAD) -o $@ SCADs/bar-clamp.scad 
+$(TARGET)/frame-vertex-with-foot.stl: SCADs/vertex.scad
+	$(OPENSCAD) -D basefoot=true -o $@ SCADs/vertex.scad 
+$(TARGET)/frame-vertex-without-foot.stl: SCADs/vertex.scad
+	$(OPENSCAD)  -D basefoot=false -o $@ SCADs/vertex.scad
+$(TARGET)/bed-spring_4off.stl:
+	cp STLs/bed-spring_4off.stl $@
+$(TARGET)/%.stl: SCADs/%.scad
 	@echo "Processing $@"
-	$(OPENSCAD) -s $(TARGET)$@ $(subst $(TARGET),.,source$(subst .stl,.scad,$@))
-$(TARGET)/frame-vertex-with-foot.stl: source/frame-vertex.scad
-	$(OPENSCAD) -D basefoot=true -s $@ source/frame-vertex.scad 
-$(TARGET)/frame-vertex-without-foot.stl: source/frame-vertex.scad
-	$(OPENSCAD)  -D basefoot=false -s $@ source/frame-vertex.scad
-$(TARGET)/y-motor-bracket.stl: source/ybrac-t.scad
-	$(OPENSCAD) -s $@ ybrac-t.scad
+	$(OPENSCAD) -o $@ $(subst $(TARGET),,SCADs$(subst .stl,.scad,$@))
 
 #$(PARTS) : $(TARGET)
 #	@echo "Processing $@"

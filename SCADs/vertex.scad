@@ -33,24 +33,6 @@ basefoot = false;
 
 vertex( with_foot = basefoot );
 
-// Commented out TVRRUG logo
-
-//difference()
-//{
-//	vertex( with_foot = basefoot );
-//	rotate( [0, 0, 120] )
-//	{
-//		translate( [-2.5, -55, 12.5] )
-//		{
-//			scale( [0.75, 0.75, 1] )
-//			{
-//				linear_extrude( file = "TVRR.dxf",  height = 5 );
-//			}
-//		}
-//	}
-//}
-
-
 //import_stl( "frame-vertex.stl" );
 
 //teardrop();
