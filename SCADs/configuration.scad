@@ -7,18 +7,7 @@
 // http://www.reprap.org/wiki/Prusa_Mendel
 // http://github.com/prusajr/PrusaMendel
 
-// PLEASE SELECT ONE OF THE CONFIGURATIONS BELOW
-// BY UN-COMMENTING IT
-
-// Uncomment for metric settings
-// METRIC METRIC METRIC METRIC METRIC METRIC METRIC METRIC 
-
 include <metric.scad>;
-
-// Uncomment for imperial settings
-// IMPERIAL IMPERIAL IMPERIAL IMPERIAL IMPERIAL IMPERIAL IMPERIAL 
-
-//include <sae.scad>;
 
 // CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM CUSTOM
 
